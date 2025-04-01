@@ -1,7 +1,7 @@
 module.exports = function(eleventyConfig) {
-    // Ensure Eleventy detects Markdown posts
+    // Ensure Eleventy detects only Markdown posts in the "src/posts" directory
     eleventyConfig.addCollection("posts", function(collectionApi) {
-        return collectionApi.getFilteredByGlob("src/**/*.md");
+        return collectionApi.getFilteredByGlob("src/posts/**/*.md");  // Only include files in src/posts/
     });
 
     // Pass through CSS
