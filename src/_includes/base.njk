@@ -8,8 +8,14 @@
 </head>
 <body>
 
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- Sidebar -->
     <div class="sidebar">
-        <div class="sidebar-header">📖 Blog</div>
+        <div class="sidebar-header">
+            📖 Blog
+        </div>
         <nav>
             <ul>
                 {% for post in collections.posts %}
@@ -21,6 +27,7 @@
         </nav>
     </div>
 
+    <!-- Main content -->
     <div class="content">
         <header>
             <h1>{{ title }}</h1>
@@ -30,5 +37,6 @@
         </main>
     </div>
 
+    <script src="/script.js"></script>
 </body>
 </html>

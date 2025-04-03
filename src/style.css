@@ -102,22 +102,58 @@ th {
 
 /* Adjust sidebar width */
 .sidebar {
-    width: 250px;  /* Increase width */
+    width: 250px;
     padding: 20px;
     position: fixed;
     left: 0;
     top: 0;
     bottom: 0;
     background: #eee8d5;
-    /* border-right: 2px solid var(--border); */
     overflow-y: auto;
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+.sidebar.collapsed {
+    transform: translateX(-100%); /* Hide sidebar */
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the button and the title */
+    padding: 10px;
+    background: var(--base-accent);
+    color: white;
+    font-size: 1.2rem;
+}
+
+.sidebar-toggle {
+    background: white;
+    color: var(--base-accent);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    position: relative; /* Default position when sidebar is visible */
+    z-index: 1000;
+}
+
+.sidebar.collapsed .sidebar-toggle {
+    position: fixed; /* Keep the button visible when sidebar is collapsed */
+    top: 10px;
+    left: 10px;
+    transform: translateX(0); /* Reset transform */
 }
 
 /* Ensure content is properly offset */
 .content {
-    margin-left: 270px; /* Matches sidebar width */
-    padding: 20px;
-    max-width: 800px; /* Wider text area */
+    margin-left: 270px;
+    transition: margin-left 0.3s ease; /* Smooth transition */
+}
+
+.content.collapsed {
+    margin-left: 20px; /* Adjust content margin when sidebar is hidden */
 }
 
 /* Improve sidebar links */

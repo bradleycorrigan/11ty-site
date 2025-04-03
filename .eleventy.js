@@ -4,8 +4,9 @@ module.exports = function(eleventyConfig) {
         return collectionApi.getFilteredByGlob("src/posts/**/*.md");  // Only include files in src/posts/
     });
 
-    // Pass through CSS
+    // Pass through CSS and Javascript
     eleventyConfig.addPassthroughCopy("src/style.css");
+    eleventyConfig.addPassthroughCopy("src/script.js");
 
     return {
         dir: {
