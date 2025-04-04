@@ -100,7 +100,7 @@ th {
     --border: #93a1a1;
 }
 
-/* Adjust sidebar width */
+/* Sidebar styles */
 .sidebar {
     width: 250px;
     padding: 20px;
@@ -117,36 +117,23 @@ th {
     transform: translateX(-100%); /* Hide sidebar */
 }
 
-.sidebar-header {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Space between the button and the title */
-    padding: 10px;
+/* Sidebar toggle button */
+.sidebar-toggle {
+    position: fixed;
+    top: 10px;
+    left: 260px; /* Default position: 10px to the right of the sidebar */
     background: var(--base-accent);
     color: white;
-    font-size: 1.2rem;
-}
-
-.sidebar-toggle {
-    background: white;
-    color: var(--base-accent);
     border: none;
     padding: 5px 10px;
     cursor: pointer;
     font-size: 1rem;
     border-radius: 4px;
-    position: relative; /* Default position when sidebar is visible */
-    z-index: 1000;
+    z-index: 1000; /* Ensure it stays on top */
+    transition: left 0.3s ease; /* Smooth transition for position */
 }
 
-.sidebar.collapsed .sidebar-toggle {
-    position: fixed; /* Keep the button visible when sidebar is collapsed */
-    top: 10px;
-    left: 10px;
-    transform: translateX(0); /* Reset transform */
-}
-
-/* Ensure content is properly offset */
+/* Content styles */
 .content {
     margin-left: 270px;
     transition: margin-left 0.3s ease; /* Smooth transition */

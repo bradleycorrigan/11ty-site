@@ -19,7 +19,7 @@
         <nav>
             <ul>
                 {% for post in collections.posts %}
-                    {% if post.url != '/' %} <!-- Exclude homepage -->
+                    <!-- {% if post.url != '/' %} Exclude homepage -->
                         <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
                     {% endif %}
                 {% endfor %}
