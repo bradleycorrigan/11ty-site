@@ -121,7 +121,7 @@ th {
 .sidebar-toggle {
     position: fixed;
     top: 10px;
-    left: 260px; /* Default position: 10px to the right of the sidebar */
+    left: 10px; /* Default position when sidebar is collapsed */
     background: var(--base-accent);
     color: white;
     border: none;
@@ -131,6 +131,10 @@ th {
     border-radius: 4px;
     z-index: 1000; /* Ensure it stays on top */
     transition: left 0.3s ease; /* Smooth transition for position */
+}
+
+.sidebar:not(.collapsed) + .sidebar-toggle {
+    left: calc(250px + 10px); /* 10px to the right of the sidebar when open */
 }
 
 /* Content styles */

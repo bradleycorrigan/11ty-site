@@ -2,7 +2,7 @@ function toggleSidebar() {
     const sidebar = document.querySelector('.sidebar');
     const toggleButton = document.querySelector('.sidebar-toggle');
     const content = document.querySelector('.content');
-
+    
     // Toggle the collapsed class
     sidebar.classList.toggle('collapsed');
     content.classList.toggle('collapsed');

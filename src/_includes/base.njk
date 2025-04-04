@@ -12,23 +12,21 @@
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
 
     <!-- Sidebar -->
-    <div class="sidebar">
+    <div class="sidebar collapsed">
         <div class="sidebar-header">
             📖 Blog
         </div>
         <nav>
             <ul>
                 {% for post in collections.posts %}
-                    <!-- {% if post.url != '/' %} Exclude homepage -->
-                        <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
-                    {% endif %}
+                    <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
                 {% endfor %}
             </ul>
         </nav>
     </div>
 
     <!-- Main content -->
-    <div class="content">
+    <div class="content collapsed">
         <header>
             <h1>{{ title }}</h1>
         </header>
