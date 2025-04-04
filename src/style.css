@@ -109,6 +109,7 @@ body.light-theme {
     --code-bg: #eee8d5;
     --code-fg: #586e75;
     --border-color: #ccc;
+    --sidebar-bg: #f5e8c8; /* Slightly darker than --base-bg */
 }
 
 /* Dark Theme */
@@ -120,6 +121,7 @@ body.dark-theme {
     --code-bg: #073642;
     --code-fg: #93a1a1;
     --border-color: #586e75;
+    --sidebar-bg: #001f27; /* Slightly darker than --base-bg */
 }
 
 /* Apply theme variables */
@@ -151,13 +153,44 @@ a:hover {
     left: 0;
     top: 0;
     bottom: 0;
-    background: #eee8d5;
+    background: var(--sidebar-bg); /* Use the new sidebar background variable */
+    color: var(--base-fg); /* Use theme foreground */
     overflow-y: auto;
-    transition: transform 0.3s ease; /* Smooth transition */
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; /* Smooth transition */
 }
 
 .sidebar.collapsed {
     transform: translateX(-100%); /* Hide sidebar */
+}
+
+/* Sidebar header */
+.sidebar-header {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--base-fg); /* Use theme foreground */
+}
+
+/* Sidebar links */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 4px; /* Add space between links */
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 8px 6px;
+    color: var(--base-fg); /* Use theme foreground */
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    background: var(--base-accent); /* Use theme accent color */
+    color: white; /* Ensure text is readable */
 }
 
 /* Sidebar toggle button */
@@ -188,30 +221,6 @@ a:hover {
 
 .content.collapsed {
     margin-left: 20px; /* Adjust content margin when sidebar is hidden */
-}
-
-/* Improve sidebar links */
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin-bottom: 4px;  /* Add space between links */
-}
-
-.sidebar ul li a {
-    display: block;
-    padding: 8px 6px;
-    color: var(--fg);
-    text-decoration: none;
-    /* border-left: 3px solid transparent; Subtle hover effect */
-}
-
-.sidebar ul li a:hover {
-    background: var(--accent);
-    color: white;
-    /* border-left: 3px solid var(--fg); */
 }
 
 /* Dark mode toggle button */
