@@ -1,240 +1,221 @@
 /* Solarized Light Blog Theme */
 :root {
-    --base-bg: #fdf6e3;
-    --base-fg: #657b83;
-    --base-accent: #268bd2;
-    --base-muted: #93a1a1;
-    --code-bg: #eee8d5;
-    --code-fg: #586e75;
-    --border-color: #ccc;
+    --base-bg: #fdf6e3; /* Background color for the light theme */
+    --base-fg: #657b83; /* Foreground (text) color for the light theme */
+    --base-accent: #268bd2; /* Accent color for links and highlights */
+    --base-muted: #93a1a1; /* Muted color for less prominent text */
+    --code-bg: #eee8d5; /* Background color for code blocks */
+    --code-fg: #586e75; /* Foreground color for code text */
+    --border-color: #ccc; /* Border color for tables and other elements */
 }
 
+/* General body styles */
 body {
-    background: var(--base-bg);
-    color: var(--base-fg);
-    font-family: Georgia, serif;
-    line-height: 1.7;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
+    background: var(--base-bg); /* Use the theme's background color */
+    color: var(--base-fg); /* Use the theme's foreground color */
+    font-family: Georgia, serif; /* Serif font for readability */
+    line-height: 1.7; /* Comfortable line spacing */
+    max-width: 800px; /* Limit content width for better readability */
+    margin: 40px auto; /* Center the content */
+    padding: 20px; /* Add padding around the content */
 }
 
+/* Header styles */
 header h1 {
-    font-size: 2em;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    font-size: 2em; /* Larger font size for main headers */
+    border-bottom: 2px solid var(--border); /* Underline with a border */
+    padding-bottom: 10px; /* Space between text and border */
+    margin-bottom: 20px; /* Space below the header */
 }
 
+/* Heading styles */
 h1, h2, h3 {
-    color: var(--base-accent);
-    font-family: "Helvetica Neue", sans-serif;
+    color: var(--base-accent); /* Use the accent color for headings */
+    font-family: "Helvetica Neue", sans-serif; /* Sans-serif font for headings */
 }
 
+/* Link styles */
 a {
-    color: var(--base-accent);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--base-accent);
+    color: var(--base-accent); /* Use the accent color for links */
+    text-decoration: none; /* Remove underline */
+    border-bottom: 1px dotted var(--base-accent); /* Add a dotted underline */
 }
 
 a:hover {
-    color: var(--base-fg);
-    border-bottom: 1px solid var(--base-fg);
+    color: var(--base-fg); /* Change color on hover */
+    border-bottom: 1px solid var(--base-fg); /* Solid underline on hover */
 }
 
+/* Code and preformatted text styles */
 pre, code {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    font-family: "Courier New", monospace;
-    padding: 2px 6px;
-    border-radius: 4px;
+    background: var(--code-bg); /* Background color for code */
+    color: var(--code-fg); /* Text color for code */
+    font-family: "Courier New", monospace; /* Monospace font for code */
+    padding: 2px 6px; /* Padding around inline code */
+    border-radius: 4px; /* Rounded corners for code blocks */
 }
 
 pre {
-    padding: 10px;
-    overflow-x: auto;
-    border-left: 3px solid var(--base-muted);
+    padding: 10px; /* Padding for preformatted blocks */
+    overflow-x: auto; /* Enable horizontal scrolling for long code */
+    border-left: 3px solid var(--base-muted); /* Highlight with a left border */
 }
 
+/* Blockquote styles */
 blockquote {
-    border-left: 3px solid var(--base-accent);
-    padding-left: 15px;
-    color: var(--base-muted);
-    font-style: italic;
+    border-left: 3px solid var(--base-accent); /* Accent-colored left border */
+    padding-left: 15px; /* Space between text and border */
+    color: var(--base-muted); /* Muted text color */
+    font-style: italic; /* Italicize blockquotes */
 }
 
+/* Horizontal rule styles */
 hr {
-    border: none;
-    border-top: 1px solid var(--border-color);
-    margin: 30px 0;
+    border: none; /* Remove default border */
+    border-top: 1px solid var(--border-color); /* Add a custom border */
+    margin: 30px 0; /* Space above and below the rule */
 }
 
+/* List styles */
 ul, ol {
-    padding-left: 20px;
+    padding-left: 20px; /* Indent list items */
 }
 
+/* Image styles */
 img {
-    max-width: 100%;
-    border-radius: 4px;
+    max-width: 100%; /* Ensure images don't overflow their container */
+    border-radius: 4px; /* Add rounded corners */
 }
 
+/* Table styles */
 table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; /* Full-width tables */
+    border-collapse: collapse; /* Remove gaps between table cells */
 }
 
 td, th {
-    border: 1px solid var(--border-color);
-    padding: 8px;
+    border: 1px solid var(--border-color); /* Add borders to cells */
+    padding: 8px; /* Add padding inside cells */
 }
 
 th {
-    background: var(--code-bg);
-}
-
-/* Solarized Light Theme */
-:root {
-    --bg: #fdf6e3;
-    --fg: #657b83;
-    --accent: #268bd2;
-    --border: #93a1a1;
+    background: var(--code-bg); /* Use code background for headers */
 }
 
 /* Light Theme (default) */
 body.light-theme {
-    --base-bg: #fdf6e3;
-    --base-fg: #657b83;
-    --base-accent: #268bd2;
-    --base-muted: #93a1a1;
-    --code-bg: #eee8d5;
-    --code-fg: #586e75;
-    --border-color: #ccc;
-    --sidebar-bg: #f5e8c8; /* Slightly darker than --base-bg */
+    --base-bg: #fdf6e3; /* Light theme background */
+    --base-fg: #657b83; /* Light theme text color */
+    --base-accent: #268bd2; /* Light theme accent color */
+    --base-muted: #93a1a1; /* Light theme muted text */
+    --code-bg: #eee8d5; /* Light theme code background */
+    --code-fg: #586e75; /* Light theme code text */
+    --border-color: #ccc; /* Light theme border color */
+    --sidebar-bg: #f5e8c8; /* Sidebar background slightly darker than base */
 }
 
 /* Dark Theme */
 body.dark-theme {
-    --base-bg: #002b36;
-    --base-fg: #839496;
-    --base-accent: #268bd2;
-    --base-muted: #586e75;
-    --code-bg: #073642;
-    --code-fg: #93a1a1;
-    --border-color: #586e75;
-    --sidebar-bg: #001f27; /* Slightly darker than --base-bg */
-}
-
-/* Apply theme variables */
-body {
-    background: var(--base-bg);
-    color: var(--base-fg);
-    font-family: Georgia, serif;
-    line-height: 1.7;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-}
-
-a {
-    color: var(--base-accent);
-    text-decoration: none;
-}
-
-a:hover {
-    color: var(--base-fg);
-    border-bottom: 1px solid var(--base-fg);
+    --base-bg: #002b36; /* Dark theme background */
+    --base-fg: #839496; /* Dark theme text color */
+    --base-accent: #268bd2; /* Dark theme accent color */
+    --base-muted: #586e75; /* Dark theme muted text */
+    --code-bg: #073642; /* Dark theme code background */
+    --code-fg: #93a1a1; /* Dark theme code text */
+    --border-color: #586e75; /* Dark theme border color */
+    --sidebar-bg: #001f27; /* Sidebar background slightly darker than base */
 }
 
 /* Sidebar styles */
 .sidebar {
-    width: 250px;
-    padding: 20px;
-    position: fixed;
+    width: 250px; /* Fixed width for the sidebar */
+    padding: 20px; /* Padding inside the sidebar */
+    position: fixed; /* Fixed position on the left */
     left: 0;
     top: 0;
     bottom: 0;
-    background: var(--sidebar-bg); /* Use the new sidebar background variable */
-    color: var(--base-fg); /* Use theme foreground */
-    overflow-y: auto;
-    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; /* Smooth transition */
+    background: var(--sidebar-bg); /* Use the sidebar background variable */
+    color: var(--base-fg); /* Use theme foreground color */
+    overflow-y: auto; /* Enable scrolling for long content */
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; /* Smooth transitions */
 }
 
 .sidebar.collapsed {
-    transform: translateX(-100%); /* Hide sidebar */
+    transform: translateX(-100%); /* Hide the sidebar off-screen */
 }
 
-/* Sidebar header */
+/* Sidebar header styles */
 .sidebar-header {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: var(--base-fg); /* Use theme foreground */
+    font-size: 1.5rem; /* Larger font size for the header */
+    font-weight: bold; /* Bold text */
+    margin-bottom: 20px; /* Space below the header */
+    color: var(--base-fg); /* Use theme foreground color */
 }
 
-/* Sidebar links */
+/* Sidebar link styles */
 .sidebar ul {
-    list-style: none;
-    padding: 0;
+    list-style: none; /* Remove bullet points */
+    padding: 0; /* Remove padding */
 }
 
 .sidebar ul li {
-    margin-bottom: 4px; /* Add space between links */
+    margin-bottom: 4px; /* Space between list items */
 }
 
 .sidebar ul li a {
-    display: block;
-    padding: 8px 6px;
-    color: var(--base-fg); /* Use theme foreground */
-    text-decoration: none;
+    display: block; /* Block-level links */
+    padding: 8px 6px; /* Padding inside links */
+    color: var(--base-fg); /* Use theme foreground color */
+    text-decoration: none; /* Remove underline */
 }
 
 .sidebar ul li a:hover {
-    background: var(--base-accent); /* Use theme accent color */
-    color: white; /* Ensure text is readable */
+    background: var(--base-accent); /* Highlight background on hover */
+    color: white; /* Change text color on hover */
 }
 
 /* Sidebar toggle button */
 .sidebar-toggle {
-    position: fixed;
-    top: 10px;
-    left: 10px; /* Default position when sidebar is collapsed */
-    background: var(--base-accent);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 4px;
+    position: fixed; /* Fixed position */
+    top: 10px; /* Position near the top */
+    left: 10px; /* Position near the left */
+    background: var(--base-accent); /* Use the accent color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Padding inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Standard font size */
+    border-radius: 4px; /* Rounded corners */
     z-index: 1000; /* Ensure it stays on top */
     transition: left 0.3s ease; /* Smooth transition for position */
 }
 
 .sidebar:not(.collapsed) + .sidebar-toggle {
-    left: calc(250px + 10px); /* 10px to the right of the sidebar when open */
+    left: calc(250px + 10px); /* Position to the right of the sidebar when open */
 }
 
 /* Content styles */
 .content {
-    margin-left: 270px;
-    transition: margin-left 0.3s ease; /* Smooth transition */
+    margin-left: 270px; /* Space for the sidebar */
+    transition: margin-left 0.3s ease; /* Smooth transition for content shift */
 }
 
 .content.collapsed {
-    margin-left: 20px; /* Adjust content margin when sidebar is hidden */
+    margin-left: 20px; /* Adjust margin when the sidebar is hidden */
 }
 
 /* Dark mode toggle button */
 .dark-mode-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: var(--base-accent);
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 1rem;
-    border-radius: 4px;
-    z-index: 1000;
+    position: fixed; /* Fixed position */
+    top: 10px; /* Position near the top */
+    right: 10px; /* Position near the right */
+    background: var(--base-accent); /* Use the accent color */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 5px 10px; /* Padding inside the button */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 1rem; /* Standard font size */
+    border-radius: 4px; /* Rounded corners */
+    z-index: 1000; /* Ensure it stays on top */
 }
 
