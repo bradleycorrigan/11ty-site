@@ -1,10 +1,10 @@
 ---
-title: Third post
+title: Markdown showcase
 ---
 
-# Welcome to My Solarized Blog
+# Welcome to My Blog
 
-A simple, readable markdown-based blog styled with a **Solarized Light** theme.
+I'm keeping this here in case I forget any markdown lol
 
 ## Headers & Text Styles
 
