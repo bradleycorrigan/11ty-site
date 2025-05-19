@@ -13,7 +13,7 @@ layout: "base.njk"
 {% endif %}
 --- 
 ## Other stuff
-[📷 My photos](https://photos.bradleycorrigan.co.uk) <br>
+[📷 My photos](https://photos.bradleycorrigan.co.uk) 
 {% if collections.posts and collections.posts.length > 0 %}
   {% for post in collections.embeds %}
 	[{{ post.data.title }}]({{ post.url}})

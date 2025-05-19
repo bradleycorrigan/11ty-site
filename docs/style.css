@@ -219,3 +219,56 @@ body.dark-theme {
     z-index: 1000; /* Ensure it stays on top */
 }
 
+/* Shared callout base style */
+.info, .note, .tip, .warning {
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 0.25rem;
+  background-color: var(--code-bg);
+  color: var(--base-fg);
+}
+
+.info::before,
+.note::before,
+.tip::before,
+.warning::before {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+/* Info block */
+.info {
+  border-left: 4px solid var(--base-accent);
+}
+.info::before {
+  content: "ℹ️ Info";
+  color: var(--base-accent);
+}
+
+/* Note block */
+.note {
+  border-left: 4px solid #b58900;
+}
+.note::before {
+  content: "📝 Note";
+  color: #b58900;
+}
+
+/* Tip block */
+.tip {
+  border-left: 4px solid #859900;
+}
+.tip::before {
+  content: "💡 Tip";
+  color: #859900;
+}
+
+/* Warning block */
+.warning {
+  border-left: 4px solid #dc322f;
+}
+.warning::before {
+  content: "⚠️ Warning";
+  color: #dc322f;
+}
