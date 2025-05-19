@@ -70,6 +70,7 @@ We then visited the Tren Blindado (armoured train), a train that was derailed by
 On this day we also met with some inspirational combatants who had fought at the Bay of Pigs invasion, against the US’ attempt to overthrow the Cuban revolution. It was interesting to hear about their experiences and their passion for protecting the revolution and defending the Cuban people against US imperialism. 
 
 # Tuesday 6 May
+This was the day that I largely had to stay back because of my blistering sun burn. In the morning we visited another university, one of the oldest in Cuba - and did some volunteering - clearing up some leaves. In the afternoon, the rest of the brigade went to see a workplace that operated under the limited private sector. 
 
 # Wednesday 7 May 
 We met with various people from the National Programmes for the advancement of women, against racism and discrimination, and the body for Compliance with the children and youth code. 
