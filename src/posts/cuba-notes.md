@@ -1,5 +1,6 @@
 ---
 title: Notes from Cuba
+eleventyExcludeFromCollections: true
 ---
 
 ::: info

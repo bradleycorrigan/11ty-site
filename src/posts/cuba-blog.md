@@ -1,5 +1,6 @@
 ---
 title: Young Trade Unionists' May Day Brigade Cuba
+eleventyExcludeFromCollections: true
 ---
 
 # Revolution, against all the odds 
@@ -40,4 +41,4 @@ On farms, we saw the impacts of reduced access to fertiliser, tractors, and othe
 
 Our visit to Cuba was nothing short of life-changing. It challenged everything we thought we knew about Cuba, and about the world by extension. It showed us that it is indeed possible to fight back, even in the most challenging conditions, and that it’s possible to win. Each one of us must continue to fight for a Cuba free from the pressures of imperialism, we must fight to end the illegal blockade. We must defend the right of a state to exist freely and without US influence. 
 
-![More camp art](/images/c11.jpg)
+![More camp art](/images/c11.jpg)   
