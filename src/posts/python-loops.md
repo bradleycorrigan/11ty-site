@@ -16,6 +16,62 @@ while number < 10:
     print(number)
     number = number + 1
 ```
+---
 
 # Types of loops
 
+## For Loops
+`for` loops take a list and perform an action once for each item inside the list. For example, if you had a list if of birds with five birds in, the action would happen five times. 
+
+For example, this would be the output 
+```python
+birds = ['blue tit', 'great tit', 'sparrow', 'barn owl', 'kingfisher']
+
+for bird in birds:
+    print(bird)
+
+blue tit
+great tit
+sparrow
+barn owl
+kingfisher
+```
+The general pattern for a `for` loop looks like this: 
+```python
+for <variable> in [<list>]:
+    <action>
+```
+The name of the variable is arbitrary and you decide it when you write the loop. Of course though, it's better for readability if the variable name makes sense. Nevertheless, with the above example, I could name the variable `dogs` and still get a list of birds. 
+
+```python 
+birds = ['blue tit', 'great tit', 'sparrow', 'barn owl', 'kingfisher']
+
+for dog in birds:
+    print(dog)
+
+blue tit
+great tit
+sparrow
+barn owl
+kingfisher
+```
+
+## While Loops
+`While` loops repeat an action over and over until a condition is no longer true. I.e. they loop `while` something is true. The example at the very beginning of this post is a `while` loop, and would print the below:
+```python
+number = 0
+
+while number < 10:
+    print(number)
+    number = number + 1
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+```

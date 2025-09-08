@@ -53,7 +53,52 @@ number <span class="token operator">=</span> <span class="token number">10</span
 <span class="token keyword">while</span> number <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">:</span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>number<span class="token punctuation">)</span>
     number <span class="token operator">=</span> number <span class="token operator">+</span> <span class="token number">1</span></code></pre>
+<hr>
 <h1>Types of loops</h1>
+<h2>For Loops</h2>
+<p><code>for</code> loops take a list and perform an action once for each item inside the list. For example, if you had a list if of birds with five birds in, the action would happen five times.</p>
+<p>For example, this would be the output</p>
+<pre class="language-python"><code class="language-python">birds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'blue tit'</span><span class="token punctuation">,</span> <span class="token string">'great tit'</span><span class="token punctuation">,</span> <span class="token string">'sparrow'</span><span class="token punctuation">,</span> <span class="token string">'barn owl'</span><span class="token punctuation">,</span> <span class="token string">'kingfisher'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> bird <span class="token keyword">in</span> birds<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>bird<span class="token punctuation">)</span>
+
+blue tit
+great tit
+sparrow
+barn owl
+kingfisher</code></pre>
+<p>The general pattern for a <code>for</code> loop looks like this:</p>
+<pre class="language-python"><code class="language-python"><span class="token keyword">for</span> <span class="token operator">&lt;</span>variable<span class="token operator">></span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token operator">&lt;</span><span class="token builtin">list</span><span class="token operator">></span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token operator">&lt;</span>action<span class="token operator">></span></code></pre>
+<p>The name of the variable is arbitrary and you decide it when you write the loop. Of course though, it's better for readability if the variable name makes sense. Nevertheless, with the above example, I could name the variable <code>dogs</code> and still get a list of birds.</p>
+<pre class="language-python"><code class="language-python">birds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'blue tit'</span><span class="token punctuation">,</span> <span class="token string">'great tit'</span><span class="token punctuation">,</span> <span class="token string">'sparrow'</span><span class="token punctuation">,</span> <span class="token string">'barn owl'</span><span class="token punctuation">,</span> <span class="token string">'kingfisher'</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> dog <span class="token keyword">in</span> birds<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>dog<span class="token punctuation">)</span>
+
+blue tit
+great tit
+sparrow
+barn owl
+kingfisher</code></pre>
+<h2>While Loops</h2>
+<p><code>While</code> loops repeat an action over and over until a condition is no longer true. I.e. they loop <code>while</code> something is true. The example at the very beginning of this post is a <code>while</code> loop, and would print the below:</p>
+<pre class="language-python"><code class="language-python">number <span class="token operator">=</span> <span class="token number">0</span>
+
+<span class="token keyword">while</span> number <span class="token operator">&lt;</span> <span class="token number">10</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>number<span class="token punctuation">)</span>
+    number <span class="token operator">=</span> number <span class="token operator">+</span> <span class="token number">1</span>
+<span class="token number">0</span>
+<span class="token number">1</span>
+<span class="token number">2</span>
+<span class="token number">3</span>
+<span class="token number">4</span>
+<span class="token number">5</span>
+<span class="token number">6</span>
+<span class="token number">7</span>
+<span class="token number">8</span>
+<span class="token number">9</span></code></pre>
 
         </main>
     </div>
