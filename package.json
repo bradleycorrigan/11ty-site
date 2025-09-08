@@ -11,9 +11,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy": "^3.1.2",
+    "@11ty/eleventy-dev-server": "^2.0.8",
+    "@11ty/eleventy-fetch": "^5.1.0",
     "@11ty/eleventy-img": "^6.0.4",
     "@11ty/eleventy-navigation": "^1.0.1",
-    "markdown-it-container": "^4.0.0"
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.2",
+    "markdown-it-container": "^4.0.0",
+    "sharp": "^0.34.3"
   }
 }
