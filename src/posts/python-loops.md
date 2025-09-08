@@ -8,7 +8,7 @@ I've shared these notes with people multiple times so I'm making them public to 
 A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than `X`
 
 ## Example
-```
+```python
 # This loop will run nine times 
 number = 10
 
