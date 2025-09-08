@@ -1,5 +1,5 @@
 ---
-title: "Python Loops"
+title: Python Loops
 ---
 
 I've shared these notes with people multiple times so I'm making them public to make them easier to point to. I'll also link some cheatsheets and resources that I find useful. 
