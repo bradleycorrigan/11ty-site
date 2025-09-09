@@ -304,6 +304,24 @@ th {
 .warning::before { content: "⚠️ Warning"; color: #dc322f; }
 
 /* ==================== */
+/* Mobile / Responsive Adjustments */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 20px;  /* shrink left gap */
+        margin-right: 20px; /* optional, for symmetry */
+    }
+
+    .sidebar:not(.collapsed) + .sidebar-toggle {
+        left: 10px;  /* keep toggle button near left edge */
+    }
+
+    .sidebar {
+        width: 200px; /* optional: smaller sidebar on mobile */
+    }
+}
+
+
+/* ==================== */
 /* Prism.js Code Highlighting */
 /* ==================== */
 
