@@ -1,49 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Loops</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body class="light-theme"> <!-- Default theme class -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Python Loops</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body class="light-theme"> <!-- Default theme class -->
+        <!-- Sidebar toggle button -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+        <!-- Dark mode toggle button -->
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
 
-    <!-- Sidebar toggle button -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
-
-    <!-- Dark mode toggle button -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
-
-    <!-- Sidebar -->
-    <div class="sidebar collapsed">
-        <div class="sidebar-header">
-            📖 Menu
+        <!-- Sidebar -->
+        <div class="sidebar collapsed">
+            <div class="sidebar-header">
+                📖 Menu
+            </div>
+            <nav>
+                <ul>
+                    <!-- Hardcoded link for the homepage -->
+                    <li><a href="/">🏡 Home</a></li>
+                    <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                    
+                        <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                    
+                        <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                    
+                        <li><a href="/posts/python-loops/">Python Loops</a></li>
+                    
+                        <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                    
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <!-- Hardcoded link for the homepage -->
-                <li><a href="/">🏡 Home</a></li>
-                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
-                
-                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
-                
-                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
-                
-                    <li><a href="/posts/week-three-lisbon/">Week in Lisbon</a></li>
-                
-                    <li><a href="/posts/python-loops/">Python Loops</a></li>
-                
-            </ul>
-        </nav>
-    </div>
 
-    <!-- Main content -->
-    <div class="content collapsed">
-        <header>
-            <h1>Python Loops</h1>
-        </header>
-        <main>
-            <p>I've shared these notes with people multiple times so I'm making them public to make them easier to point to.</p>
+        <!-- Main content -->
+        <div class="content collapsed">
+            <header>
+                <h1>Python Loops</h1>
+            </header>
+
+            <!-- Tags section (only shows if tags exist) -->
+            
+                <div class="post-tags">
+                    <strong>Tags:</strong>
+                    
+                        
+                    
+                        
+                            <a href="/tags/python/" class="tag">#python</a>
+                        
+                    
+                </div>
+            
+
+            <main>
+                <p>I've shared these notes with people multiple times so I'm making them public to make them easier to point to.</p>
 <h1>What is a loop</h1>
 <p>A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than <code>X</code></p>
 <h2>Example</h2>
@@ -116,9 +129,9 @@ blue tit
 cormorant
 heron</code></pre>
 
-        </main>
-    </div>
+            </main>
+        </div>
 
-    <script src="/script.js"></script>
-</body>
+        <script src="/script.js"></script>
+    </body>
 </html>

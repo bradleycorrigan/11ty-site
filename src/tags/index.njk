@@ -1,0 +1,53 @@
+---
+title: All Tags
+permalink: /tags/
+layout: base.njk
+---
+
+<h1>Browse posts by topic:</h1>
+
+
+<div class="tag-cloud">
+{% for tag in collections.tagList %}
+  {% set tagCount = collections.postsByTag[tag].length %}
+  <a href="/tags/{{ tag | slugify }}/" class="tag-link" data-count="{{ tagCount }}">
+    {{ tag }} ({{ tagCount }})
+  </a>
+{% endfor %}
+</div>
+
+<style>
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.tag-link {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #f0f0f0;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.tag-link:hover {
+  background: #007acc;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.tag-link[data-count="1"] { font-size: 0.8rem; }
+.tag-link[data-count="2"] { font-size: 0.9rem; }
+.tag-link[data-count="3"] { font-size: 1rem; }
+.tag-link[data-count^="4"], 
+.tag-link[data-count^="5"] { font-size: 1.1rem; }
+.tag-link[data-count^="6"], 
+.tag-link[data-count^="7"], 
+.tag-link[data-count^="8"], 
+.tag-link[data-count^="9"] { font-size: 1.2rem; }
+</style>

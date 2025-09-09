@@ -1,5 +1,7 @@
 ---
 title: Python Loops
+tags:
+    - python
 ---
 
 I've shared these notes with people multiple times so I'm making them public to make them easier to point to.

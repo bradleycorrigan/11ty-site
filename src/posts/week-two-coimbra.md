@@ -1,5 +1,6 @@
 ---
 title: Week in Coimbra
+tags: travel
 ---
 I spent my second week in Portugal in Coimbra, the city's former capital and a beautiful medieval town. It's a much smaller city than Porto, and really gave me the chance to move more slowly. 
 

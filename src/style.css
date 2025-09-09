@@ -1,538 +1,332 @@
-/* Solarized Light Blog Theme */
+/* ============================================ */
+/* Solarized Light & Dark Blog Theme - Cleaned */
+/* ============================================ */
+
+/* ==================== */
+/* Root Variables */
+/* ==================== */
 :root {
-    --base-bg: #fdf6e3; /* Background color for the light theme */
-    --base-fg: #657b83; /* Foreground (text) color for the light theme */
-    --base-accent: #268bd2; /* Accent color for links and highlights */
-    --base-muted: #93a1a1; /* Muted color for less prominent text */
-    --code-bg: #eee8d5; /* Background color for code blocks */
-    --code-fg: #586e75; /* Foreground color for code text */
-    --border-color: #ccc; /* Border color for tables and other elements */
+    --base-bg: #fdf6e3;
+    --base-fg: #657b83;
+    --base-accent: #268bd2;
+    --base-muted: #93a1a1;
+    --code-bg: #eee8d5;
+    --code-fg: #586e75;
+    --border-color: #ccc;
+    --sidebar-bg: #f5e8c8;
 }
 
-/* General body styles */
+/* Dark Theme Variables */
+body.dark-theme {
+    --base-bg: #002b36;
+    --base-fg: #839496;
+    --base-accent: #268bd2;
+    --base-muted: #586e75;
+    --code-bg: #073642;
+    --code-fg: #93a1a1;
+    --border-color: #586e75;
+    --sidebar-bg: #001f27;
+}
+
+/* ==================== */
+/* Global Styles */
+/* ==================== */
 body {
-    background: var(--base-bg); /* Use the theme's background color */
-    color: var(--base-fg); /* Use the theme's foreground color */
-    font-family: Georgia, serif; /* Serif font for readability */
-    line-height: 1.7; /* Comfortable line spacing */
-    max-width: 800px; /* Limit content width for better readability */
-    margin: 40px auto; /* Center the content */
-    padding: 20px; /* Add padding around the content */
+    background: var(--base-bg);
+    color: var(--base-fg);
+    font-family: Georgia, serif;
+    line-height: 1.7;
+    max-width: 1100px; /* Increased for 3 columns */
+    margin: 40px auto;
+    padding: 20px;
 }
 
-/* Header styles */
-header h1 {
-    font-size: 2em; /* Larger font size for main headers */
-    border-bottom: 2px solid var(--border); /* Underline with a border */
-    padding-bottom: 10px; /* Space between text and border */
-    margin-bottom: 20px; /* Space below the header */
-}
-
-/* Heading styles */
 h1, h2, h3 {
-    color: var(--base-accent); /* Use the accent color for headings */
-    font-family: "Helvetica Neue", sans-serif; /* Sans-serif font for headings */
+    color: var(--base-accent);
+    font-family: "Helvetica Neue", sans-serif;
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
 }
 
-/* Link styles */
 a {
-    color: var(--base-accent); /* Use the accent color for links */
-    text-decoration: none; /* Remove underline */
-    border-bottom: 1px dotted var(--base-accent); /* Add a dotted underline */
+    color: var(--base-accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--base-accent);
 }
 
 a:hover {
-    color: var(--base-fg); /* Change color on hover */
-    border-bottom: 1px solid var(--base-fg); /* Solid underline on hover */
+    color: var(--base-fg);
+    border-bottom: 1px solid var(--base-fg);
 }
 
-/* Code and preformatted text styles */
+/* Code blocks */
 pre, code {
-    background: var(--code-bg); /* Background color for code */
-    color: var(--code-fg); /* Text color for code */
-    font-family: "Courier New", monospace; /* Monospace font for code */
-    padding: 2px 6px; /* Padding around inline code */
-    border-radius: 4px; /* Rounded corners for code blocks */
+    background: var(--code-bg);
+    color: var(--code-fg);
+    font-family: "Courier New", monospace;
+    border-radius: 4px;
 }
 
 pre {
-    padding: 10px; /* Padding for preformatted blocks */
-    overflow-x: auto; /* Enable horizontal scrolling for long code */
-    border-left: 3px solid var(--base-muted); /* Highlight with a left border */
+    padding: 10px;
+    overflow-x: auto;
+    border-left: 3px solid var(--base-muted);
 }
 
-/* Blockquote styles */
+/* Blockquotes */
 blockquote {
-    border-left: 3px solid var(--base-accent); /* Accent-colored left border */
-    padding-left: 15px; /* Space between text and border */
-    color: var(--base-muted); /* Muted text color */
-    font-style: italic; /* Italicize blockquotes */
+    border-left: 3px solid var(--base-accent);
+    padding-left: 15px;
+    color: var(--base-muted);
+    font-style: italic;
 }
 
-/* Horizontal rule styles */
+/* Horizontal rules */
 hr {
-    border: none; /* Remove default border */
-    border-top: 1px solid var(--border-color); /* Add a custom border */
-    margin: 30px 0; /* Space above and below the rule */
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 30px 0;
 }
 
-/* List styles */
-ul, ol {
-    padding-left: 20px; /* Indent list items */
-}
-
-/* Image styles */
+/* Images */
 img {
-    max-width: 100%; /* Ensure images don't overflow their container */
-    border-radius: 4px; /* Add rounded corners */
+    max-width: 100%;
+    border-radius: 4px;
 }
 
-/* Table styles */
+/* Tables */
 table {
-    width: 100%; /* Full-width tables */
-    border-collapse: collapse; /* Remove gaps between table cells */
+    width: 100%;
+    border-collapse: collapse;
 }
-
 td, th {
-    border: 1px solid var(--border-color); /* Add borders to cells */
-    padding: 8px; /* Add padding inside cells */
+    border: 1px solid var(--border-color);
+    padding: 8px;
 }
-
 th {
-    background: var(--code-bg); /* Use code background for headers */
+    background: var(--code-bg);
 }
 
-/* Light Theme (default) */
-body.light-theme {
-    --base-bg: #fdf6e3; /* Light theme background */
-    --base-fg: #657b83; /* Light theme text color */
-    --base-accent: #268bd2; /* Light theme accent color */
-    --base-muted: #93a1a1; /* Light theme muted text */
-    --code-bg: #eee8d5; /* Light theme code background */
-    --code-fg: #586e75; /* Light theme code text */
-    --border-color: #ccc; /* Light theme border color */
-    --sidebar-bg: #f5e8c8; /* Sidebar background slightly darker than base */
-}
-
-/* Dark Theme */
-body.dark-theme {
-    --base-bg: #002b36; /* Dark theme background */
-    --base-fg: #839496; /* Dark theme text color */
-    --base-accent: #268bd2; /* Dark theme accent color */
-    --base-muted: #586e75; /* Dark theme muted text */
-    --code-bg: #073642; /* Dark theme code background */
-    --code-fg: #93a1a1; /* Dark theme code text */
-    --border-color: #586e75; /* Dark theme border color */
-    --sidebar-bg: #001f27; /* Sidebar background slightly darker than base */
-}
-
-/* Sidebar styles */
+/* ==================== */
+/* Sidebar */
+/* ==================== */
 .sidebar {
-    width: 250px; /* Fixed width for the sidebar */
-    padding: 20px; /* Padding inside the sidebar */
-    position: fixed; /* Fixed position on the left */
-    left: 0;
+    width: 250px;
+    padding: 20px;
+    position: fixed;
     top: 0;
     bottom: 0;
-    background: var(--sidebar-bg); /* Use the sidebar background variable */
-    color: var(--base-fg); /* Use theme foreground color */
-    overflow-y: auto; /* Enable scrolling for long content */
-    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease; /* Smooth transitions */
+    left: 0;
+    background: var(--sidebar-bg);
+    color: var(--base-fg);
+    overflow-y: auto;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
 }
 
 .sidebar.collapsed {
-    transform: translateX(-100%); /* Hide the sidebar off-screen */
+    transform: translateX(-100%);
 }
 
-/* Sidebar header styles */
 .sidebar-header {
-    font-size: 1.5rem; /* Larger font size for the header */
-    font-weight: bold; /* Bold text */
-    margin-bottom: 20px; /* Space below the header */
-    color: var(--base-fg); /* Use theme foreground color */
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-/* Sidebar link styles */
 .sidebar ul {
-    list-style: none; /* Remove bullet points */
-    padding: 0; /* Remove padding */
+    list-style: none;
+    padding: 0;
 }
 
 .sidebar ul li {
-    margin-bottom: 4px; /* Space between list items */
+    margin-bottom: 4px;
 }
 
 .sidebar ul li a {
-    display: block; /* Block-level links */
-    padding: 8px 6px; /* Padding inside links */
-    color: var(--base-fg); /* Use theme foreground color */
-    text-decoration: none; /* Remove underline */
+    display: block;
+    padding: 8px 6px;
+    color: var(--base-fg);
 }
 
 .sidebar ul li a:hover {
-    background: var(--base-accent); /* Highlight background on hover */
-    color: white; /* Change text color on hover */
+    background: var(--base-accent);
+    color: white;
+    border-radius: 4px;
 }
 
-/* Sidebar toggle button */
+/* Sidebar toggle */
 .sidebar-toggle {
-    position: fixed; /* Fixed position */
-    top: 10px; /* Position near the top */
-    left: 10px; /* Position near the left */
-    background: var(--base-accent); /* Use the accent color */
-    color: white; /* White text */
-    border: none; /* Remove border */
-    padding: 5px 10px; /* Padding inside the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1rem; /* Standard font size */
-    border-radius: 4px; /* Rounded corners */
-    z-index: 1000; /* Ensure it stays on top */
-    transition: left 0.3s ease; /* Smooth transition for position */
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background: var(--base-accent);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    z-index: 1000;
+    transition: left 0.3s ease;
 }
 
 .sidebar:not(.collapsed) + .sidebar-toggle {
-    left: calc(250px + 10px); /* Position to the right of the sidebar when open */
+    left: calc(250px + 10px);
 }
 
-/* Content styles */
+/* Content */
 .content {
-    margin-left: 270px; /* Space for the sidebar */
-    transition: margin-left 0.3s ease; /* Smooth transition for content shift */
+    margin-left: 270px;
+    transition: margin-left 0.3s ease;
 }
 
 .content.collapsed {
-    margin-left: 20px; /* Adjust margin when the sidebar is hidden */
+    margin-left: 20px;
 }
 
-/* Dark mode toggle button */
+/* Dark mode toggle */
 .dark-mode-toggle {
-    position: fixed; /* Fixed position */
-    top: 10px; /* Position near the top */
-    right: 10px; /* Position near the right */
-    background: var(--base-accent); /* Use the accent color */
-    color: white; /* White text */
-    border: none; /* Remove border */
-    padding: 5px 10px; /* Padding inside the button */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 1rem; /* Standard font size */
-    border-radius: 4px; /* Rounded corners */
-    z-index: 1000; /* Ensure it stays on top */
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--base-accent);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    z-index: 1000;
 }
 
-/* Shared callout base style */
+/* ==================== */
+/* Tag Columns - Responsive */
+/* ==================== */
+
+.tag-column {
+    background: var(--code-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--base-accent);
+}
+
+.tag-column h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.tag-header {
+    color: var(--base-accent) !important;
+    font-weight: bold;
+    border-bottom: none !important;
+}
+
+.tag-header:hover {
+    color: var(--base-fg) !important;
+    border-bottom: 1px solid var(--base-fg) !important;
+}
+
+.tag-posts {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tag-posts li a {
+    display: block;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.tag-posts li a:hover {
+    background: var(--base-accent);
+    color: white;
+    border-radius: 4px;
+    padding-left: 0.5rem;
+}
+
+/* ==================== */
+/* Post Tags */
+.post-tags {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--code-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--base-accent);
+}
+
+.post-tags .tag {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    margin: 0.25rem 0.25rem 0 0;
+    background: var(--base-accent);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.post-tags .tag:hover {
+    background: var(--base-fg);
+    transform: translateY(-1px);
+    color: white !important;
+}
+
+/* ==================== */
+/* Info / Note / Tip / Warning */
 .info, .note, .tip, .warning {
-  padding: 1rem;
-  margin: 1.5rem 0;
-  border-radius: 0.25rem;
-  background-color: var(--code-bg);
-  color: var(--base-fg);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0.25rem;
+    background-color: var(--code-bg);
+    color: var(--base-fg);
 }
 
-.info::before,
-.note::before,
-.tip::before,
-.warning::before {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+.info::before, .note::before, .tip::before, .warning::before {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
-/* Info block */
-.info {
-  border-left: 4px solid var(--base-accent);
-}
-.info::before {
-  content: "ℹ️ Info";
-  color: var(--base-accent);
-}
+.info { border-left: 4px solid var(--base-accent); }
+.info::before { content: "ℹ️ Info"; color: var(--base-accent); }
 
-/* Note block */
-.note {
-  border-left: 4px solid #b58900;
-}
-.note::before {
-  content: "📝 Note";
-  color: #b58900;
-}
+.note { border-left: 4px solid #b58900; }
+.note::before { content: "📝 Note"; color: #b58900; }
 
-/* Tip block */
-.tip {
-  border-left: 4px solid #859900;
-}
-.tip::before {
-  content: "💡 Tip";
-  color: #859900;
-}
+.tip { border-left: 4px solid #859900; }
+.tip::before { content: "💡 Tip"; color: #859900; }
 
-/* Warning block */
-.warning {
-  border-left: 4px solid #dc322f;
-}
-.warning::before {
-  content: "⚠️ Warning";
-  color: #dc322f;
-}
+.warning { border-left: 4px solid #dc322f; }
+.warning::before { content: "⚠️ Warning"; color: #dc322f; }
 
-/* ============================================ */
-/* COMPLETE PRISM.JS SYNTAX HIGHLIGHTING THEME */
-/* ============================================ */
-
-/* Solarized Light Theme for Prism.js */
-
-/* Reset code block styles for syntax highlighting */
-pre[class*="language-"] {
+/* ==================== */
+/* Prism.js Code Highlighting */
+pre[class*="language-"], code[class*="language-"] {
     background: var(--code-bg);
     color: var(--code-fg);
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     font-size: 1em;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
-    padding: 1em;
-    margin: .5em 0;
-    overflow: auto;
     border-radius: 0.3em;
 }
 
-code[class*="language-"] {
-    background: var(--code-bg);
-    color: var(--code-fg);
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    font-size: 1em;
-    text-align: left;
-    white-space: pre;
-    word-spacing: normal;
-    word-break: normal;
-    word-wrap: normal;
-    line-height: 1.5;
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
+pre[class*="language-"] {
+    padding: 1em;
+    overflow: auto;
 }
 
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    background: var(--code-bg);
+code[class*="language-"]:not(pre) {
     padding: .1em;
     border-radius: .3em;
     white-space: normal;
 }
 
-/* Token colors for light theme */
-body:not(.dark-theme) .token.comment,
-body:not(.dark-theme) .token.prolog,
-body:not(.dark-theme) .token.doctype,
-body:not(.dark-theme) .token.cdata {
-    color: #93a1a1; /* Solarized base1 */
-    font-style: italic;
-}
-
-body:not(.dark-theme) .token.punctuation {
-    color: #586e75; /* Solarized base01 */
-}
-
-body:not(.dark-theme) .token.property,
-body:not(.dark-theme) .token.tag,
-body:not(.dark-theme) .token.boolean,
-body:not(.dark-theme) .token.number,
-body:not(.dark-theme) .token.constant,
-body:not(.dark-theme) .token.symbol,
-body:not(.dark-theme) .token.deleted {
-    color: #dc322f; /* Solarized red */
-}
-
-body:not(.dark-theme) .token.selector,
-body:not(.dark-theme) .token.attr-name,
-body:not(.dark-theme) .token.string,
-body:not(.dark-theme) .token.char,
-body:not(.dark-theme) .token.builtin,
-body:not(.dark-theme) .token.inserted {
-    color: #859900; /* Solarized green */
-}
-
-body:not(.dark-theme) .token.operator,
-body:not(.dark-theme) .token.entity,
-body:not(.dark-theme) .token.url,
-body:not(.dark-theme) .language-css .token.string,
-body:not(.dark-theme) .style .token.string {
-    color: #cb4b16; /* Solarized orange */
-}
-
-body:not(.dark-theme) .token.atrule,
-body:not(.dark-theme) .token.attr-value,
-body:not(.dark-theme) .token.keyword {
-    color: #859900; /* Solarized green */
-}
-
-body:not(.dark-theme) .token.function,
-body:not(.dark-theme) .token.class-name {
-    color: #268bd2; /* Solarized blue */
-}
-
-body:not(.dark-theme) .token.regex,
-body:not(.dark-theme) .token.important,
-body:not(.dark-theme) .token.variable {
-    color: #cb4b16; /* Solarized orange */
-}
-
-/* Token colors for dark theme */
-body.dark-theme .token.comment,
-body.dark-theme .token.prolog,
-body.dark-theme .token.doctype,
-body.dark-theme .token.cdata {
-    color: #586e75; /* Solarized base01 */
-    font-style: italic;
-}
-
-body.dark-theme .token.punctuation {
-    color: #93a1a1; /* Solarized base1 */
-}
-
-body.dark-theme .token.property,
-body.dark-theme .token.tag,
-body.dark-theme .token.boolean,
-body.dark-theme .token.number,
-body.dark-theme .token.constant,
-body.dark-theme .token.symbol,
-body.dark-theme .token.deleted {
-    color: #dc322f; /* Solarized red */
-}
-
-body.dark-theme .token.selector,
-body.dark-theme .token.attr-name,
-body.dark-theme .token.string,
-body.dark-theme .token.char,
-body.dark-theme .token.builtin,
-body.dark-theme .token.inserted {
-    color: #859900; /* Solarized green */
-}
-
-body.dark-theme .token.operator,
-body.dark-theme .token.entity,
-body.dark-theme .token.url,
-body.dark-theme .language-css .token.string,
-body.dark-theme .style .token.string {
-    color: #cb4b16; /* Solarized orange */
-}
-
-body.dark-theme .token.atrule,
-body.dark-theme .token.attr-value,
-body.dark-theme .token.keyword {
-    color: #859900; /* Solarized green */
-}
-
-body.dark-theme .token.function,
-body.dark-theme .token.class-name {
-    color: #268bd2; /* Solarized blue */
-}
-
-body.dark-theme .token.regex,
-body.dark-theme .token.important,
-body.dark-theme .token.variable {
-    color: #cb4b16; /* Solarized orange */
-}
-
-/* Important and bold tokens */
-.token.important,
-.token.bold {
-    font-weight: bold;
-}
-
-.token.italic {
-    font-style: italic;
-}
-
-.token.entity {
-    cursor: help;
-}
-
-/* Line highlighting */
-.line-highlight {
-    position: absolute;
-    left: 0;
-    right: 0;
-    padding: inherit 0;
-    margin-top: 1em;
-    background: hsla(24, 20%, 50%,.08);
-    background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
-    pointer-events: none;
-    line-height: inherit;
-    white-space: pre;
-}
-
-/* Diff highlighting */
-.token.deleted {
-    background-color: hsl(350deg 100% 88% / 47%);
-}
-
-.token.inserted {
-    background-color: hsl(120deg 73% 75% / 35%);
-}
-
-/* Make the + and - characters unselectable for copy/paste */
-.token.prefix.unchanged,
-.token.prefix.inserted,
-.token.prefix.deleted {
-    -webkit-user-select: none;
-    user-select: none;
-}
-
-/* Optional: full-width background color */
-.token.inserted:not(.prefix),
-.token.deleted:not(.prefix) {
-    display: block;
-}
-
-/* Line numbers plugin styles */
-pre[class*="language-"].line-numbers {
-    position: relative;
-    padding-left: 3.8em;
-    counter-reset: linenumber;
-}
-
-pre[class*="language-"].line-numbers > code {
-    position: relative;
-    white-space: inherit;
-}
-
-.line-numbers .line-numbers-rows {
-    position: absolute;
-    pointer-events: none;
-    top: 0;
-    font-size: 100%;
-    left: -3.8em;
-    width: 3em;
-    letter-spacing: -1px;
-    border-right: 1px solid var(--border-color);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.line-numbers-rows > span {
-    display: block;
-    counter-increment: linenumber;
-}
-
-.line-numbers-rows > span:before {
-    content: counter(linenumber);
-    color: var(--base-muted);
-    display: block;
-    padding-right: 0.8em;
-    text-align: right;
-}
+/* ==================== */
+/* Line Numbers / Diff Highlighting */
+pre.line-numbers { padding-left: 3.8em; position: relative; }
+.line-numbers .line-numbers-rows { position: absolute; pointer-events: none; top: 0; left: -3.8em; width: 3em; border-right: 1px solid var(--border-color); counter-reset: linenumber; }
+.line-numbers-rows > span { display: block; counter-increment: linenumber; }
+.line-numbers-rows > span:before { content: counter(linenumber); display: block; padding-right: 0.8em; text-align: right; color: var(--base-muted); }

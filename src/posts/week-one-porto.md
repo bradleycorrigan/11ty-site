@@ -1,5 +1,6 @@
 ---
 title: Week in Porto
+tags: travel
 ---
 
 From 31/3/25 until 1/6/25, I'm on paid sabbatical from work. During that time, I'm travelling around Portugal for a month. I'm going to Porto, Coimbra, Lisbon, and then Porto again. Today is Sunday 6 April, the end of my first week in Porto. 

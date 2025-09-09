@@ -1,0 +1,41 @@
+---
+pagination:
+  data: collections.tagList
+  size: 1
+  alias: tag
+permalink: /tags/{{ tag | slugify }}/
+layout: base.njk
+eleventyComputed:
+  title: "Posts tagged '{{ tag }}'"
+---
+
+<p>{{ collections.postsByTag[tag].length }} post{% if collections.postsByTag[tag].length != 1 %}s{% endif %} tagged with "{{ tag }}"</p>
+
+<ul class="post-list">
+{% for post in collections.postsByTag[tag] | reverse %}
+  <li>
+    <article>
+      <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+      {% if post.data.date %}
+        <time datetime="{{ post.data.date | date('YYYY-MM-DD') }}">
+          {{ post.data.date | date('MMMM DD, YYYY') }}
+        </time>
+      {% endif %}
+      {% if post.data.description %}
+        <p>{{ post.data.description }}</p>
+      {% endif %}
+      {% if post.data.tags %}
+        <div class="tags">
+          {% for postTag in post.data.tags %}
+            {% if postTag != "posts" %}
+              <a href="/tags/{{ postTag | slugify }}/" class="tag">#{{ postTag }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </article>
+  </li>
+{% endfor %}
+</ul>
+
+<p><a href="/tags/">← All tags</a></p>

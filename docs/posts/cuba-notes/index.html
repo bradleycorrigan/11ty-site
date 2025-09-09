@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notes from Cuba</title>
-    <link rel="stylesheet" href="/style.css">
-</head>
-<body class="light-theme"> <!-- Default theme class -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Notes from Cuba</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body class="light-theme"> <!-- Default theme class -->
+        <!-- Sidebar toggle button -->
+        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+        <!-- Dark mode toggle button -->
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
 
-    <!-- Sidebar toggle button -->
-    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
-
-    <!-- Dark mode toggle button -->
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
-
-    <!-- Sidebar -->
-    <div class="sidebar collapsed">
-        <div class="sidebar-header">
-            📖 Menu
+        <!-- Sidebar -->
+        <div class="sidebar collapsed">
+            <div class="sidebar-header">
+                📖 Menu
+            </div>
+            <nav>
+                <ul>
+                    <!-- Hardcoded link for the homepage -->
+                    <li><a href="/">🏡 Home</a></li>
+                    <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                    
+                        <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                    
+                        <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                    
+                        <li><a href="/posts/week-three-lisbon/">Week in Lisbon</a></li>
+                    
+                        <li><a href="/posts/python-loops/">Python Loops</a></li>
+                    
+                        <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                    
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <!-- Hardcoded link for the homepage -->
-                <li><a href="/">🏡 Home</a></li>
-                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
-                
-                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
-                
-                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
-                
-                    <li><a href="/posts/week-three-lisbon/">Week in Lisbon</a></li>
-                
-                    <li><a href="/posts/python-loops/">Python Loops</a></li>
-                
-            </ul>
-        </nav>
-    </div>
 
-    <!-- Main content -->
-    <div class="content collapsed">
-        <header>
-            <h1>Notes from Cuba</h1>
-        </header>
-        <main>
-            <div class="info">
+        <!-- Main content -->
+        <div class="content collapsed">
+            <header>
+                <h1>Notes from Cuba</h1>
+            </header>
+
+            <!-- Tags section (only shows if tags exist) -->
+            
+                <div class="post-tags">
+                    <strong>Tags:</strong>
+                    
+                        
+                    
+                </div>
+            
+
+            <main>
+                <div class="info">
 <p><strong>Note</strong>
 I didn’t manage to stick to taking daily notes on each night, so here’s my best effort run down of what happened each day retrospectively.</p>
 </div>
@@ -95,9 +106,9 @@ I didn’t manage to stick to taking daily notes on each night, so here’s my b
 <h1>Friday 9 May</h1>
 <p>Today we visited biocubafarma facilities where they research, design, and manufacture vaccines and treatments for diseases. During COVID, The US’ illegal blockade meant that Cuba didn’t have access to the vaccines that other countries did, so they had to research and design their own vaccines to protect the Cuban population. Cuba successfully designed two vaccines and rolled them out across the country free of charge - with over 90% of their population choosing to receive the vaccine.</p>
 
-        </main>
-    </div>
+            </main>
+        </div>
 
-    <script src="/script.js"></script>
-</body>
+        <script src="/script.js"></script>
+    </body>
 </html>
