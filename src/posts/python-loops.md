@@ -6,7 +6,9 @@ tags:
 
 I've shared these notes with people multiple times so I'm making them public to make them easier to point to.
 # What is a loop 
+::: info
 A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than `X`
+:::
 
 ## Example
 ```python
@@ -37,11 +39,16 @@ sparrow
 barn owl
 kingfisher
 ```
+::: tip
 The general pattern for a `for` loop looks like this: 
+
 ```python
 for <variable> in [<list>]:
     <action>
 ```
+:::
+
+::: tip
 The name of the variable is arbitrary and you decide it when you write the loop. Of course though, it's better for readability if the variable name makes sense. Nevertheless, with the above example, I could name the variable `dogs` and still get a list of birds. 
 
 ```python 
@@ -56,6 +63,7 @@ sparrow
 barn owl
 kingfisher
 ```
+:::
 
 ## While Loops
 `While` loops repeat an action over and over until a condition is no longer true. I.e. they loop `while` something is true. The example at the very beginning of this post is a `while` loop, and would print the below:

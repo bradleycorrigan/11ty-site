@@ -8,10 +8,14 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPlugin(syntaxHighlight);
 
   // Use markdown-it with the 'info' container + allow raw HTML
-  const md = markdownIt({
-    html: true
-  }).use(markdownItContainer, 'info');
-  eleventyConfig.setLibrary("md", md);
+  const md = markdownIt({ html: true })
+  .use(markdownItContainer, 'info')
+  .use(markdownItContainer, 'note')
+  .use(markdownItContainer, 'tip')
+  .use(markdownItContainer, 'warning');
+
+eleventyConfig.setLibrary("md", md);
+
 
   // Posts collection
   eleventyConfig.addCollection("posts", function(collectionApi) {

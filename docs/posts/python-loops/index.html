@@ -58,7 +58,9 @@
             <main>
                 <p>I've shared these notes with people multiple times so I'm making them public to make them easier to point to.</p>
 <h1>What is a loop</h1>
+<div class="info">
 <p>A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than <code>X</code></p>
+</div>
 <h2>Example</h2>
 <pre class="language-python"><code class="language-python"><span class="token comment"># This loop will run nine times </span>
 number <span class="token operator">=</span> <span class="token number">10</span>
@@ -81,9 +83,12 @@ great tit
 sparrow
 barn owl
 kingfisher</code></pre>
+<div class="tip">
 <p>The general pattern for a <code>for</code> loop looks like this:</p>
 <pre class="language-python"><code class="language-python"><span class="token keyword">for</span> <span class="token operator">&lt;</span>variable<span class="token operator">></span> <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token operator">&lt;</span><span class="token builtin">list</span><span class="token operator">></span><span class="token punctuation">]</span><span class="token punctuation">:</span>
     <span class="token operator">&lt;</span>action<span class="token operator">></span></code></pre>
+</div>
+<div class="tip">
 <p>The name of the variable is arbitrary and you decide it when you write the loop. Of course though, it's better for readability if the variable name makes sense. Nevertheless, with the above example, I could name the variable <code>dogs</code> and still get a list of birds.</p>
 <pre class="language-python"><code class="language-python">birds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">'blue tit'</span><span class="token punctuation">,</span> <span class="token string">'great tit'</span><span class="token punctuation">,</span> <span class="token string">'sparrow'</span><span class="token punctuation">,</span> <span class="token string">'barn owl'</span><span class="token punctuation">,</span> <span class="token string">'kingfisher'</span><span class="token punctuation">]</span>
 
@@ -95,6 +100,7 @@ great tit
 sparrow
 barn owl
 kingfisher</code></pre>
+</div>
 <h2>While Loops</h2>
 <p><code>While</code> loops repeat an action over and over until a condition is no longer true. I.e. they loop <code>while</code> something is true. The example at the very beginning of this post is a <code>while</code> loop, and would print the below:</p>
 <pre class="language-python"><code class="language-python">number <span class="token operator">=</span> <span class="token number">0</span>
