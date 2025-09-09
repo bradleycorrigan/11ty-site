@@ -1,6 +1,7 @@
 const markdownIt = require("markdown-it");
 const markdownItContainer = require("markdown-it-container");
 
+
 module.exports = function(eleventyConfig) {
   // Syntax highlighting
   const syntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
@@ -59,6 +60,7 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/style.css");
   eleventyConfig.addPassthroughCopy("src/script.js");
+
 
   return {
     dir: {
