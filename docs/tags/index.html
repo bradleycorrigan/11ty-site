@@ -1,51 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>All Tags</title>
-        <link rel="stylesheet" href="/style.css">
-    </head>
-    <body class="light-theme"> <!-- Default theme class -->
-        <!-- Sidebar toggle button -->
-        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
-        <!-- Dark mode toggle button -->
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tags</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
 
-        <!-- Sidebar -->
-        <div class="sidebar collapsed">
-            <div class="sidebar-header">
-                📖 Menu
-            </div>
-            <nav>
-                <ul>
-                    <!-- Hardcoded link for the homepage -->
-                    <li><a href="/">🏡 Home</a></li>
-                    <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
-                    
-                        <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
-                    
-                        <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
-                    
-                        <li><a href="/posts/python-loops/">Python Loops</a></li>
-                    
-                        <li><a href="/posts/sql-joins/">SQL Joins</a></li>
-                    
-                </ul>
-            </nav>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
         </div>
-
-        <!-- Main content -->
-        <div class="content collapsed">
-            <header>
-                <h1>All Tags</h1>
-            </header>
-
-            <!-- Tags section (only shows if tags exist) -->
-            
-
-            <main>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
                 
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Python Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>All Tags</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+
+        <main>
+            
 <h1>Browse posts by topic:</h1>
 
 
@@ -103,9 +119,9 @@
 .tag-link[data-count^="8"], 
 .tag-link[data-count^="9"] { font-size: 1.2rem; }
 </style>
-            </main>
-        </div>
+        </main>
+    </div>
 
-        <script src="/script.js"></script>
-    </body>
+    <script src="/script.js"></script>
+</body>
 </html>

@@ -1,69 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SQL Joins</title>
-        <link rel="stylesheet" href="/style.css">
-    </head>
-    <body class="light-theme"> <!-- Default theme class -->
-        <!-- Sidebar toggle button -->
-        <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
-        <!-- Dark mode toggle button -->
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Joins</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
 
-        <!-- Sidebar -->
-        <div class="sidebar collapsed">
-            <div class="sidebar-header">
-                📖 Menu
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Python Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>SQL Joins</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/sql/" class="tag">#sql</a>
+                    
+                
             </div>
-            <nav>
-                <ul>
-                    <!-- Hardcoded link for the homepage -->
-                    <li><a href="/">🏡 Home</a></li>
-                    <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
-                    
-                        <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
-                    
-                        <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
-                    
-                        <li><a href="/posts/python-loops/">Python Loops</a></li>
-                    
-                        <li><a href="/posts/sql-joins/">SQL Joins</a></li>
-                    
-                </ul>
-            </nav>
-        </div>
+        
 
-        <!-- Main content -->
-        <div class="content collapsed">
-            <header>
-                <h1>SQL Joins</h1>
-            </header>
-
-            <!-- Tags section (only shows if tags exist) -->
-            
-                <div class="post-tags">
-                    <strong>Tags:</strong>
-                    
-                        
-                    
-                        
-                            <a href="/tags/sql/" class="tag">#sql</a>
-                        
-                    
-                </div>
-            
-
-            <main>
-                <h1>What are SQL Joins?</h1>
+        <main>
+            <h1>What are SQL Joins?</h1>
 <div class="info">
-<p>In SQL, joins are  a way of combining data from multiple tables, based on a common key between the tables. For example, you may have a table about <code>customers</code> and a table about <code>sales</code>; by using <code>customer_id</code> you can join information about <code>customers</code> and <code>sales</code> together.</p>
+<p>In SQL, joins are  a way of combining data from multiple tables, based on a common key between the tables. For example, you may have a table about <code>customers</code> and a table about <code>sales</code>; by using <code>customer_id</code> you can join information about <code>customers</code> and <code>sales</code> together. Depending on what you'd like to achieve, you'd choose the appropriate join type.</p>
 </div>
+<hr>
+<h2>Types of joins</h2>
+<p>There are different types of joins, that retain different parts of each table. Here's a rundown, but see each part in depth throughout this post:</p>
+<h3>Join (Inner Join)</h3>
+<p>A <code>join</code> is sometimes referred to as an <code>inner join</code>. This type of join only returns rows that match the condition (i.e. their must be results on both sides)</p>
+<div class="tip">
+<p>In the spirit of being explicit as possible in your code, it can be good to write <code>inner join</code> every time</p>
+</div>
+<h3>Left join</h3>
+<p>A <code>left join</code> keeps all rows from the left table, if there's no match on the right side, the values are filled with <code>nulls</code></p>
+<h3>Right join</h3>
+<p>The opposite of a <code>left join</code>, retains all rows from the right table, and if there's no matches on the left side, fills with <code>nulls</code>.</p>
+<div class="tip">
+<p>For legibility in long queries or models, it can often be best to just flip your tables around and use left joins throughout</p>
+</div>
+<h3>Full join</h3>
+<p>Returns all rows from both tables, and fills blanks in with nulls.</p>
+<h3>Cross join</h3>
+<p>Returns all possible combinations of rows</p>
+<div class="warning">
+<p>Cross joins can often risk returning very large cartesian products. It's worth really considering if this type of join matches your use case</p>
+</div>
+<hr>
+<h1>Left join example</h1>
+<div class="info">
+<p>A <code>left join</code> keeps all rows from the left table, if there's no match on the right side, the values are filled with <code>nulls</code>. You might use a <code>left join</code> when it's important to keep rows even if they don't have a match. For example, if you wanted a list of <strong>all birds</strong>, even if you haven't spotted them yet</p>
+</div>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    b<span class="token punctuation">.</span>bird_name<span class="token punctuation">,</span>
+    b<span class="token punctuation">.</span>color<span class="token punctuation">,</span>
+    s<span class="token punctuation">.</span>location
+<span class="token keyword">FROM</span> Birds b
+<span class="token keyword">LEFT</span> <span class="token keyword">JOIN</span> Sightings s
+    <span class="token keyword">ON</span> b<span class="token punctuation">.</span>bird_id <span class="token operator">=</span> s<span class="token punctuation">.</span>bird_id
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> b<span class="token punctuation">.</span>bird_id<span class="token punctuation">;</span>
+</code></pre>
+<h3>Left table - birds</h3>
+<table>
+<thead>
+<tr>
+<th>bird_id</th>
+<th>bird_name</th>
+<th>color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sparrow</td>
+<td>Brown</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Robin</td>
+<td>Red</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Blue Jay</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Crow</td>
+<td>Black</td>
+</tr>
+</tbody>
+</table>
+<h3>Right table - sightings</h3>
+<table>
+<thead>
+<tr>
+<th>sighting_id</th>
+<th>bird_id</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>1</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>102</td>
+<td>2</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>103</td>
+<td>2</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>104</td>
+<td>4</td>
+<td>Parking Lot</td>
+</tr>
+</tbody>
+</table>
+<h3>Left join output</h3>
+<table>
+<thead>
+<tr>
+<th>bird_name</th>
+<th>color</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Parking Lot</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>Full join example</h1>
+<div class="info">
+<p>A full join returns all rows from both tables, filling in NULL for missing matches on either side. You might use a full join when you want a complete picture of both datasets, even if some items don’t have matches. For example, if we logged sightings of birds - but we're not sure what the bird was.</p>
+</div>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    b<span class="token punctuation">.</span>bird_name<span class="token punctuation">,</span>
+    b<span class="token punctuation">.</span>color<span class="token punctuation">,</span>
+    s<span class="token punctuation">.</span>location
+<span class="token keyword">FROM</span> Birds b
+<span class="token keyword">FULL</span> <span class="token keyword">JOIN</span> Sightings s
+    <span class="token keyword">ON</span> b<span class="token punctuation">.</span>bird_id <span class="token operator">=</span> s<span class="token punctuation">.</span>bird_id</code></pre>
+<h3>Left table (as before)</h3>
+<table>
+<thead>
+<tr>
+<th>bird_id</th>
+<th>bird_name</th>
+<th>color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sparrow</td>
+<td>Brown</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Robin</td>
+<td>Red</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Blue Jay</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Crow</td>
+<td>Black</td>
+</tr>
+</tbody>
+</table>
+<h3>Right table</h3>
+<p>New sighting, <code>null</code> bird_id</p>
+<table>
+<thead>
+<tr>
+<th>sighting_id</th>
+<th>bird_id</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>1</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>102</td>
+<td>2</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>103</td>
+<td>2</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>104</td>
+<td>4</td>
+<td>Parking Lot</td>
+</tr>
+<tr>
+<td>105</td>
+<td>null</td>
+<td>Zoo</td>
+</tr>
+</tbody>
+</table>
+<h3>Output</h3>
+<table>
+<thead>
+<tr>
+<th>bird_name</th>
+<th>color</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Parking Lot</td>
+</tr>
+<tr>
+<td>NULL</td>
+<td>NULL</td>
+<td>Zoo</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h1>Cross join example</h1>
+<div class="info">
+<p>A <code>cross join</code> returns all possible combinations of rows from both tables. This is useful when you want to pair every row from one table with every row from another, but be careful—this can result in a very large number of rows if your tables are big.</p>
+<p>For example, with 4 birds and 4 sightings, you'll get 16 rows; this grows quickly.</p>
+</div>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    b<span class="token punctuation">.</span>bird_name<span class="token punctuation">,</span>
+    b<span class="token punctuation">.</span>color<span class="token punctuation">,</span>
+    s<span class="token punctuation">.</span>location
+<span class="token keyword">FROM</span> Birds b
+<span class="token keyword">CROSS</span> <span class="token keyword">JOIN</span> Sightings s
+<span class="token keyword">ORDER</span> <span class="token keyword">BY</span> b<span class="token punctuation">.</span>bird_name<span class="token punctuation">,</span> s<span class="token punctuation">.</span>location<span class="token punctuation">;</span></code></pre>
+<h3>Left table - birds</h3>
+<table>
+<thead>
+<tr>
+<th>bird_id</th>
+<th>bird_name</th>
+<th>color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Sparrow</td>
+<td>Brown</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Robin</td>
+<td>Red</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Blue Jay</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Crow</td>
+<td>Black</td>
+</tr>
+</tbody>
+</table>
+<h3>Right table - sightings</h3>
+<table>
+<thead>
+<tr>
+<th>sighting_id</th>
+<th>bird_id</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>101</td>
+<td>1</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>102</td>
+<td>2</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>103</td>
+<td>2</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>104</td>
+<td>4</td>
+<td>Parking Lot</td>
+</tr>
+</tbody>
+</table>
+<h3>Cross join output (partial)</h3>
+<table>
+<thead>
+<tr>
+<th>bird_name</th>
+<th>color</th>
+<th>location</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>Brown</td>
+<td>Parking Lot</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Robin</td>
+<td>Red</td>
+<td>Parking Lot</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Blue Jay</td>
+<td>Blue</td>
+<td>Parking Lot</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Park</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Garden</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Forest</td>
+</tr>
+<tr>
+<td>Crow</td>
+<td>Black</td>
+<td>Parking Lot</td>
+</tr>
+</tbody>
+</table>
 
-            </main>
-        </div>
+        </main>
+    </div>
 
-        <script src="/script.js"></script>
-    </body>
+    <script src="/script.js"></script>
+</body>
 </html>
