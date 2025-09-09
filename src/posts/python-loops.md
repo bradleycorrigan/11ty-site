@@ -1,10 +1,9 @@
 ---
-title: Python Loops
+title: Loops
 tags:
     - python
 ---
 
-I've shared these notes with people multiple times so I'm making them public to make them easier to point to.
 # What is a loop 
 ::: info
 A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than `X`

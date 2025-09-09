@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Comprehensions</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>List Comprehensions</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/python/" class="tag">#python</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <h1>What is a list comprehension</h1>
+<p>A list comprehension creates a list of items by iterating through an expression. It's similar to a loop in that it allows you to generate new lists by applying an operation to each item in an existing iterable, but it does so in a more concise and readable way.</p>
+<h1>Example</h1>
+<h2>Basic list comprehension</h2>
+<pre class="language-python"><code class="language-python"><span class="token comment"># Create a list of squares from 0 to 9</span>
+squares <span class="token operator">=</span> <span class="token punctuation">[</span>x<span class="token operator">**</span><span class="token number">2</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>squares<span class="token punctuation">)</span>
+
+<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token number">36</span><span class="token punctuation">,</span> <span class="token number">49</span><span class="token punctuation">,</span> <span class="token number">64</span><span class="token punctuation">,</span> <span class="token number">81</span><span class="token punctuation">]</span></code></pre>
+<h2>List comprehension with a condition</h2>
+<p>List comprehensions can also be written with conditions. If there's a condition, the operation will only apply when the item in the list meets the condition.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># Create a list of even numbers from 0 to 9</span>
+evens <span class="token operator">=</span> <span class="token punctuation">[</span>x <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">if</span> x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>evens<span class="token punctuation">)</span>
+
+<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">]</span></code></pre>
+<h2>Including multiple loops</h2>
+<p>Multiple <code>for</code> loops can be included inside a list comprehension. These can be used to create tuples (pairs) of values in lists.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># Create a list of tuples (x, y) where x is from 1 to 3 and y is from 'a' to 'c'</span>
+pairs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span> <span class="token keyword">for</span> x <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token keyword">for</span> y <span class="token keyword">in</span> <span class="token punctuation">[</span><span class="token string">'a'</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span><span class="token punctuation">(</span>pairs<span class="token punctuation">)</span>
+
+<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'b'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span> <span class="token string">'c'</span><span class="token punctuation">)</span><span class="token punctuation">]</span></code></pre>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
