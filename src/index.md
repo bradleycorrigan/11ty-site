@@ -5,7 +5,7 @@ templateEngineOverride: njk,md
 ---
 
 # Hey
-This blog is very much just a reason for me to be able to play around eleventy (11ty) to create a static blog. I use it to post journals of travels and as a repo of knowledge. I find that writing things down helps me to synthesise knowledge, so making it public so I can find it easily myself - or even share with others - seems like a good idea. 
+This blog is very much just a reason for me to be able to play around with eleventy (11ty) to create a static blog. I use it to post journals of travels and as a repo of knowledge. I find that writing things down helps me to synthesise knowledge, so making it public so I can find it easily myself - or even share with others - seems like a good idea. 
 
 The light theme is based on VSCode solarized light, and the dark theme is based on fairyfloss.
 
