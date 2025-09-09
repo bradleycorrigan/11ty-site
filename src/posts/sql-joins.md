@@ -1,7 +1,7 @@
 --- 
 title: SQL Joins
 tags: 
-    - sql
+    - SQL
 ---
 
 # What are SQL Joins?
