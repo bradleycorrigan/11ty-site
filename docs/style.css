@@ -1,10 +1,8 @@
 /* ============================================ */
-/* Solarized Light & Dark Blog Theme - Cleaned */
+/* Solarized Light & Dark Blog Theme - Cleaned  */
 /* ============================================ */
 
-/* ==================== */
-/* Root Variables */
-/* ==================== */
+/* ==================== Root Variables ==================== */
 :root {
     --base-bg: #fdf6e3;
     --base-fg: #657b83;
@@ -16,7 +14,7 @@
     --sidebar-bg: #f5e8c8;
 }
 
-/* Dark Theme Variables */
+/* ==================== Dark Theme Variables ==================== */
 body.dark-theme {
     --base-bg: #002b36;
     --base-fg: #839496;
@@ -28,9 +26,7 @@ body.dark-theme {
     --sidebar-bg: #001f27;
 }
 
-/* ==================== */
-/* Global Styles */
-/* ==================== */
+/* ==================== Global Styles ==================== */
 body {
     background: var(--base-bg);
     color: var(--base-fg);
@@ -59,7 +55,7 @@ a:hover {
     border-bottom: 1px solid var(--base-fg);
 }
 
-/* Code blocks */
+/* ==================== Code Blocks ==================== */
 pre, code {
     background: var(--code-bg);
     color: var(--code-fg);
@@ -73,7 +69,7 @@ pre {
     border-left: 3px solid var(--base-muted);
 }
 
-/* Blockquotes */
+/* ==================== Blockquotes ==================== */
 blockquote {
     border-left: 3px solid var(--base-accent);
     padding-left: 15px;
@@ -81,35 +77,35 @@ blockquote {
     font-style: italic;
 }
 
-/* Horizontal rules */
+/* ==================== Horizontal Rules ==================== */
 hr {
     border: none;
     border-top: 1px solid var(--border-color);
     margin: 30px 0;
 }
 
-/* Images */
+/* ==================== Images ==================== */
 img {
     max-width: 100%;
     border-radius: 4px;
 }
 
-/* Tables */
+/* ==================== Tables ==================== */
 table {
     width: 100%;
     border-collapse: collapse;
 }
+
 td, th {
     border: 1px solid var(--border-color);
     padding: 8px;
 }
+
 th {
     background: var(--code-bg);
 }
 
-/* ==================== */
-/* Sidebar */
-/* ==================== */
+/* ==================== Sidebar ==================== */
 .sidebar {
     width: 250px;
     padding: 20px;
@@ -154,7 +150,7 @@ th {
     border-radius: 4px;
 }
 
-/* Sidebar toggle */
+/* ==================== Sidebar Toggle ==================== */
 .sidebar-toggle {
     position: fixed;
     top: 10px;
@@ -174,7 +170,7 @@ th {
     left: calc(250px + 10px);
 }
 
-/* Content */
+/* ==================== Content ==================== */
 .content {
     margin-left: 270px;
     transition: margin-left 0.3s ease;
@@ -184,7 +180,7 @@ th {
     margin-left: 20px;
 }
 
-/* Dark mode toggle */
+/* ==================== Dark Mode Toggle ==================== */
 .dark-mode-toggle {
     position: fixed;
     top: 10px;
@@ -199,10 +195,7 @@ th {
     z-index: 1000;
 }
 
-/* ==================== */
-/* Tag Columns - Responsive */
-/* ==================== */
-
+/* ==================== Tag Columns - Responsive ==================== */
 .tag-column {
     background: var(--code-bg);
     border-radius: 8px;
@@ -248,8 +241,7 @@ th {
     padding-left: 0.5rem;
 }
 
-/* ==================== */
-/* Post Tags */
+/* ==================== Post Tags ==================== */
 .post-tags {
     margin: 1rem 0;
     padding: 1rem;
@@ -275,8 +267,7 @@ th {
     color: white !important;
 }
 
-/* ==================== */
-/* Info / Note / Tip / Warning */
+/* ==================== Info / Note / Tip / Warning ==================== */
 .info, .note, .tip, .warning {
     padding: 1rem;
     margin: 1.5rem 0;
@@ -303,8 +294,7 @@ th {
 .warning { border-left: 4px solid #dc322f; }
 .warning::before { content: "⚠️ Warning"; color: #dc322f; }
 
-/* ==================== */
-/* Mobile / Responsive Adjustments */
+/* ==================== Mobile / Responsive Adjustments ==================== */
 @media (max-width: 768px) {
     .content {
         margin-left: 20px;  /* shrink left gap */
@@ -320,13 +310,9 @@ th {
     }
 }
 
+/* ==================== Prism.js Code Highlighting ==================== */
 
-/* ==================== */
-/* Prism.js Code Highlighting */
-/* ==================== */
-
-/* ==================== */
-/* Prism Tokens - Solarized Light */
+/* ==================== Prism Tokens - Solarized Light ==================== */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -395,12 +381,12 @@ th {
     font-style: italic;
 }
 
-/* ==================== */
-/* Line Numbers */
+/* ==================== Line Numbers ==================== */
 pre.line-numbers {
     padding-left: 3.8em;
     position: relative;
 }
+
 .line-numbers .line-numbers-rows {
     position: absolute;
     pointer-events: none;
@@ -410,10 +396,12 @@ pre.line-numbers {
     border-right: 1px solid var(--border-color);
     counter-reset: linenumber;
 }
+
 .line-numbers-rows > span {
     display: block;
     counter-increment: linenumber;
 }
+
 .line-numbers-rows > span:before {
     content: counter(linenumber);
     display: block;
@@ -422,8 +410,7 @@ pre.line-numbers {
     color: var(--base-muted);
 }
 
-/* ==================== */
-/* Dark Theme Token Overrides */
+/* ==================== Dark Theme Token Overrides ==================== */
 body.dark-theme .token.comment,
 body.dark-theme .token.prolog,
 body.dark-theme .token.doctype,
