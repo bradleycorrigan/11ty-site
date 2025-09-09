@@ -2,8 +2,7 @@
 title: Python Loops
 ---
 
-I've shared these notes with people multiple times so I'm making them public to make them easier to point to. I'll also link some cheatsheets and resources that I find useful. 
-
+I've shared these notes with people multiple times so I'm making them public to make them easier to point to.
 # What is a loop 
 A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than `X`
 
@@ -74,4 +73,23 @@ while number < 10:
 7
 8
 9
+```
+
+## Nested Loops
+Loops can be nested together, and can be used to access list items that re inside other lists. The item inside the outer loop can be used as the list for the inner loop. 
+```python 
+birds = [['sparrow', 'red kite'], ['great tit', 'blue tit'], ['cormorant', 'heron']]
+
+# Outer loop iterates over every pair of birds
+for pair in birds:
+    # The inner loop iterates through each bird in each pair 
+    for bird in pair:
+        print(bird)
+
+sparrow
+red kite
+great tit
+blue tit
+cormorant
+heron
 ```

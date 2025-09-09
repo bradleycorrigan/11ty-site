@@ -43,7 +43,7 @@
             <h1>Python Loops</h1>
         </header>
         <main>
-            <p>I've shared these notes with people multiple times so I'm making them public to make them easier to point to. I'll also link some cheatsheets and resources that I find useful.</p>
+            <p>I've shared these notes with people multiple times so I'm making them public to make them easier to point to.</p>
 <h1>What is a loop</h1>
 <p>A loop is a section of code that repeats instructions over and over, usually until a condition is met. For example, until a variable is larger than <code>X</code></p>
 <h2>Example</h2>
@@ -99,6 +99,22 @@ kingfisher</code></pre>
 <span class="token number">7</span>
 <span class="token number">8</span>
 <span class="token number">9</span></code></pre>
+<h2>Nested Loops</h2>
+<p>Loops can be nested together, and can be used to access list items that re inside other lists. The item inside the outer loop can be used as the list for the inner loop.</p>
+<pre class="language-python"><code class="language-python">birds <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">'sparrow'</span><span class="token punctuation">,</span> <span class="token string">'red kite'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'great tit'</span><span class="token punctuation">,</span> <span class="token string">'blue tit'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token string">'cormorant'</span><span class="token punctuation">,</span> <span class="token string">'heron'</span><span class="token punctuation">]</span><span class="token punctuation">]</span>
+
+<span class="token comment"># Outer loop iterates over every pair of birds</span>
+<span class="token keyword">for</span> pair <span class="token keyword">in</span> birds<span class="token punctuation">:</span>
+    <span class="token comment"># The inner loop iterates through each bird in each pair </span>
+    <span class="token keyword">for</span> bird <span class="token keyword">in</span> pair<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>bird<span class="token punctuation">)</span>
+
+sparrow
+red kite
+great tit
+blue tit
+cormorant
+heron</code></pre>
 
         </main>
     </div>
