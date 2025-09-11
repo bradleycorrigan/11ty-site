@@ -4,16 +4,17 @@
 
 /* ==================== Root Variables ==================== */
 :root {
-    --base-bg: #fdf6e3;
-    --base-fg: #657b83;
-    --base-accent: #268bd2;
-    --base-muted: #93a1a1;
-    --code-bg: #eee8d5;
-    --code-fg: #586e75;
-    --border-color: #ccc;
-    --sidebar-bg: #f5e8c8;
+    --base-bg: #fffcfd;       /* soft pink background */
+    --base-fg: #4a2e4c;       /* dark mauve text */
+    --base-accent: #790346;   /* bright pink accent */
+    --base-muted: #a78fb8;    /* muted lavender for comments */
+    --code-bg: #ffeaf2;       /* very light pink for code blocks */
+    --code-fg: #3c2a3e;       /* dark plum for code text */
+    --border-color: #f7cfe3;  /* soft pastel pink borders */
+    --sidebar-bg: #ffe0f0;    /* slightly deeper pink for sidebar */
 
-    --hover-text: #ffffff; /* default hover text for light mode */
+    --hover-bg: #ffd6eb;      /* pastel hover highlight */
+    --hover-text: #f0dbf2;    /* keep hover text dark for readability */
 }
 
 /* ==================== Dark Theme Variables (Fairyfloss) ==================== */

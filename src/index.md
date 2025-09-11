@@ -1,17 +1,17 @@
 ---
-title: Home
+title: Home 🏡
 layout: "base.njk"
 templateEngineOverride: njk,md
 ---
 
-# Hey
+# Hi 👋
 This blog is very much just a reason for me to be able to play around with eleventy (11ty) to create a static blog. I use it to post journals of travels and as a repo of knowledge. I find that writing things down helps me to synthesise knowledge, so making it public so I can find it easily myself - or even share with others - seems like a good idea. 
 
 The light theme is based on VSCode solarized light, and the dark theme is based on fairyfloss.
 
 There's also a link to my photography portfolio, which is a different static website - fully written by myself without any help from tools like 11ty. It's become a bit of a pain to maintain, but it's pretty and I like it.
 
-## Blog Posts by Topic
+## Blog Posts by Topic 📚
 
 {% if collections.tagList and collections.tagList.length > 0 %}
 <div class="tag-columns">
@@ -34,7 +34,7 @@ There's also a link to my photography portfolio, which is a different static web
 
 ---
 
-## All Posts
+## All Posts 📝
 {% if collections.posts and collections.posts.length > 0 %}
   {% for post in collections.posts %}
   [{{ post.data.title }}]({{ post.url}})
@@ -45,7 +45,7 @@ There's also a link to my photography portfolio, which is a different static web
 
 ---
 
-## Other stuff
+## Other stuff 🗃️
 [📷 My photos](https://photos.bradleycorrigan.co.uk)
 
 {% if collections.embeds and collections.embeds.length > 0 %}
