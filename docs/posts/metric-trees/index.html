@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metric Trees</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Metric Trees</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/data-concepts/" class="tag">#data-concepts</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <p>Metric trees are a hierarchical way to organise and visualise metrics that are important to a specific business area or use case. They show how high-level metrics break down into their underlying components, making it easier to understand what drives performance and where to focus improvement efforts.</p>
+<p>A simple example is <code>profit</code>, which breaks down into <code>revenue</code> and <code>cost</code>, where <code>profit</code> = <code>revenue - cost</code>. But you can go deeper - <code>revenue</code> might break down into number of <code>customers</code> × <code>average revenue per customer</code>, and so on.</p>
+<p>This creates a tree-like structure where you can trace any metric back to its root causes, helping teams understand not just what's happening, but why it's happening.</p>
+<h2>Example</h2>
+<pre class="language-mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> TD
+    A<span class="token text string">[Profit]</span> <span class="token arrow operator">--></span> B<span class="token text string">[Revenue]</span>
+    A <span class="token arrow operator">--></span> C<span class="token text string">[Cost]</span>
+    
+    B <span class="token arrow operator">--></span> D<span class="token text string">[Number of Customers]</span>
+    B <span class="token arrow operator">--></span> E<span class="token text string">[Average Revenue per Customer]</span>
+    
+    C <span class="token arrow operator">--></span> F<span class="token text string">[Fixed Costs]</span>
+    C <span class="token arrow operator">--></span> G<span class="token text string">[Variable Costs]</span>
+    
+    D <span class="token arrow operator">--></span> H<span class="token text string">[New Customers]</span>
+    D <span class="token arrow operator">--></span> I<span class="token text string">[Retained Customers]</span>
+    
+    E <span class="token arrow operator">--></span> J<span class="token text string">[Average Order Value]</span>
+    E <span class="token arrow operator">--></span> K<span class="token text string">[Purchase Frequency]</span></code></pre>
+<h2>Why should we build metric trees</h2>
+<p>Metric trees make it easier to answer business questions. For example, if we see an increase in profit over the quarter, we'd celebrate but we'd equally want to know why. Having a metric tree available helps as a starting point for investigation methodology. For example:</p>
+<ul>
+<li>has revenue gone up/down? (yes/no [follow tree])
+<ul>
+<li>It's gone up, let's investigate</li>
+</ul>
+</li>
+<li>has number of customers gone up/down? (yes/no [follow tree])
+<ul>
+<li>We have more customers, let's investigate</li>
+</ul>
+</li>
+<li>Has new customer rate increased? (yes/no [follow tree])
+<ul>
+<li>Tree ends here, but from here we could add things like marketing campaigns, referrals, SEO, particularly if we run marketing as A/B tests and can tie back increases to particularly successful marketing campaigns.</li>
+</ul>
+</li>
+</ul>
+<h2>Implementing metric trees</h2>
+<div class="tip">
+<p>Metric trees aren't just for technical teams, they should be useful for a wide range of technical and non-technical stakeholders. It's useful to consider them as a <code>data product</code> but their use shouldn't be limited to just data people.</p>
+</div>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
