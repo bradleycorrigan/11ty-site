@@ -96,7 +96,9 @@
     E <span class="token arrow operator">--></span> J<span class="token text string">[Average Order Value]</span>
     E <span class="token arrow operator">--></span> K<span class="token text string">[Purchase Frequency]</span></code></pre>
 <h2>Why should we build metric trees</h2>
-<p>Metric trees make it easier to answer business questions. For example, if we see an increase in profit over the quarter, we'd celebrate but we'd equally want to know why. Having a metric tree available helps as a starting point for investigation methodology. For example:</p>
+<p>Metric trees make it easier to answer business questions. For example, if we see an increase in profit over the quarter, we'd celebrate but we'd equally want to know why. Having a metric tree available helps as a starting point for investigation methodology.</p>
+<p>Metric trees transform vague questions like 'why did performance change?' into structured investigations that lead to actionable insights.</p>
+<p>For example:</p>
 <ul>
 <li>has revenue gone up/down? (yes/no [follow tree])
 <ul>
@@ -118,6 +120,51 @@
 <div class="tip">
 <p>Metric trees aren't just for technical teams, they should be useful for a wide range of technical and non-technical stakeholders. It's useful to consider them as a <code>data product</code> but their use shouldn't be limited to just data people.</p>
 </div>
+<ul>
+<li>Start with the most important outcome metric. For example, if we ran a bird sanctuary, visitor satisfaction might be our top level metric (we wouldn't be able to stay open if visitors thought our sanctuary sucked)</li>
+<li>By working with stakeholders we'd come to the conclusion that the satisfaction score is the product of
+<ul>
+<li>Wildlife experience (did they see any birds? did they see what they wanted to see?)</li>
+<li>Facility experience (was it clean? were the hide doors squeaky?)</li>
+<li>Value for money (are we making enough money to cover our costs? are visitors feeling that they're getting value for money? Are they staying for a long time?)</li>
+</ul>
+</li>
+<li>Then, we'd break each of these down into sub-sub-metrics</li>
+</ul>
+<p>We might build this starting with everything we could possibly ever envision contributing to a metric, and slim down later based on things like:</p>
+<ul>
+<li>Data we already have</li>
+<li>Data it's feasible to start collecting</li>
+</ul>
+<p>For example, <code>total bird count per visit</code> isn't something that would be very easy to get an accurate count of for every visitor. We could ask visitors how many birds they saw, but not everyone would fill out the survey - or they might not always know how many birds they saw.</p>
+<p>However, that wouldn't mean we shouldn't capture this data. We might look to document and accept the limitations. For example, while we won't ever perfectly know how many birds every visitor saw, we would get sight of if avid bird watchers routinely saw nothing more than two pigeons and a sparrow; that would be a useful insight.</p>
+<pre class="language-mermaid"><code class="language-mermaid"><span class="token keyword">graph</span> TD
+    A<span class="token text string">[Visitor Satisfaction Score]</span> <span class="token arrow operator">--></span> B<span class="token text string">[Wildlife Experience Quality]</span>
+    A <span class="token arrow operator">--></span> C<span class="token text string">[Facility Experience]</span>
+    A <span class="token arrow operator">--></span> D<span class="token text string">[Value for Money]</span>
+    
+    B <span class="token arrow operator">--></span> E<span class="token text string">[Bird Sighting Rate]</span>
+    B <span class="token arrow operator">--></span> F<span class="token text string">[Species Diversity Observed]</span>
+    B <span class="token arrow operator">--></span> G<span class="token text string">[Educational Content Quality]</span>
+    
+    C <span class="token arrow operator">--></span> H<span class="token text string">[Path Quality]</span>
+    C <span class="token arrow operator">--></span> I<span class="token text string">[Hide/Viewing Point Availability]</span>
+    C <span class="token arrow operator">--></span> J<span class="token text string">[Café &amp; Shop Experience]</span>
+    
+    D <span class="token arrow operator">--></span> K<span class="token text string">[Ticket Price vs Experience Duration]</span>
+    D <span class="token arrow operator">--></span> L<span class="token text string">[Additional Costs]</span>
+    
+    E <span class="token arrow operator">--></span> M<span class="token text string">[Total Bird Count per Visit]</span>
+    E <span class="token arrow operator">--></span> N<span class="token text string">[Rare Species Sightings]</span>
+    
+    F <span class="token arrow operator">--></span> O<span class="token text string">[Number of Different Species]</span>
+    F <span class="token arrow operator">--></span> P<span class="token text string">[Seasonal Migrant Availability]</span>
+    
+    I <span class="token arrow operator">--></span> Q<span class="token text string">[Number of Hides Available]</span>
+    I <span class="token arrow operator">--></span> R<span class="token text string">[Queue Time at Popular Spots]</span>
+    
+    M <span class="token arrow operator">--></span> S<span class="token text string">[Feeding Station Activity]</span>
+    M <span class="token arrow operator">--></span> T<span class="token text string">[Natural Behaviour Observations]</span></code></pre>
 
         </main>
     </div>
