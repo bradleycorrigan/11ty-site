@@ -1,8 +1,4 @@
-/* ============================================ */
-/* Solarized Light & Dark Blog Theme - Cleaned  */
-/* ============================================ */
-
-/* ==================== Root Variables ==================== */
+/* ==================== Root Variables (light theme) ==================== */
 :root {
     --base-bg: #fffcfd;       /* soft pink background */
     --base-fg: #4a2e4c;       /* dark mauve text */
