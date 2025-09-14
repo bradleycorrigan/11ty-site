@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Window Functions</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Window Functions</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/sql/" class="tag">#SQL</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <h1>What are window functions</h1>
+<p>Window functions make it possible to do calculations across rows in a table, they're written using <code>OVER()</code>. Window functions can:</p>
+<ul>
+<li>Calculate running totals</li>
+<li>Assign rank or row numbers to rows
+<ul>
+<li><code>rank()</code> and <code>row_number</code> are subtly but importantly different, and we'll get into this further later in the article</li>
+</ul>
+</li>
+</ul>
+<h2>Types of window functions</h2>
+<table>
+<thead>
+<tr>
+<th>Window Function</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SUM()</code></td>
+<td>Calculates the total of a numeric column across a window of rows, while keeping each row intact.</td>
+</tr>
+<tr>
+<td><code>ROW_NUMBER()</code></td>
+<td>Assigns a unique sequential number to each row within a partition. Useful for ranking, top-N selection, or deduplication.</td>
+</tr>
+<tr>
+<td><code>RANK()</code></td>
+<td>Assigns ranks to rows within a partition, with ties receiving the same rank. Useful for handling ties gracefully.</td>
+</tr>
+<tr>
+<td><code>DENSE_RANK()</code></td>
+<td>Similar to <code>RANK()</code> but assigns consecutive ranks without gaps, even when there are ties. Creates compact ranking systems.</td>
+</tr>
+<tr>
+<td><code>LEAD()</code> / <code>LAG()</code></td>
+<td>Accesses the value from the next (<code>LEAD</code>) or previous (<code>LAG</code>) row in a partition. Useful for comparing rows or calculating differences.</td>
+</tr>
+</tbody>
+</table>
+<h2>Window functions vs other aggregates</h2>
+<p>Another example of an aggregate would be <code>GROUP BY</code>. Below, we calculate the total_wingspan for each species of birds, and still get the correct answers. But a few things are different:</p>
+<ul>
+<li>We only get one row per species, and we had to remove bird_id, otherwise the query would treat each bird_id as its own 'group' and the total_wingspan wouldn't truly sum across all birds of the same species</li>
+<li>The rows are collapsed, each species only shows once. In the window function, we managed to keep each individual row, bird_id, individual wingspan AND still get to have the total wingspan for each species</li>
+</ul>
+<p>If we want to only see the total wingspan for each species, and don't care about maintaining the individual rows, we can use <code>GROUP BY</code>. If we need to keep each individual row, we'd use a window function.</p>
+<p>There's no straight forward <em>better</em> choice, but it's about making the right choice for the situation.</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span>
+    species<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_wingspan
+
+    <span class="token keyword">FROM</span> birds
+    <span class="token keyword">GROUP</span> <span class="token keyword">BY</span> species<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>total_wingspan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparrow</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>220</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>SUM()</h2>
+<p>The line SUM(wingspan_cm) OVER (PARTITION BY species) AS total_wingspan calculates the total wingspan for each species without collapsing rows. It works “over” partitions we’ve defined by species, meaning the calculation restarts for each species. In other words, every bird’s row is preserved, but the total wingspan for its species is shown alongside.</p>
+<h3>Example</h3>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span> 
+    bird_id<span class="token punctuation">,</span> 
+    wingspan_cm<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species<span class="token punctuation">)</span> <span class="token keyword">AS</span> total_wingspan <span class="token comment">-- this line is the window function</span>
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>total_wingspan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>60</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>220</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>220</td>
+</tr>
+</tbody>
+</table>
+<h3>Common use cases for SUM()</h3>
+<p><strong>Running totals:</strong> Calculate cumulative sums as you go through ordered data</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id <span class="token keyword">ROWS</span> <span class="token operator">BETWEEN</span> <span class="token keyword">UNBOUNDED</span> <span class="token keyword">PRECEDING</span> <span class="token operator">AND</span> <span class="token keyword">CURRENT</span> <span class="token keyword">ROW</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> running_total
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<p><strong>Percentage of total:</strong> Show each row's contribution to the group total</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species<span class="token punctuation">)</span> <span class="token keyword">AS</span> species_total<span class="token punctuation">,</span>
+    <span class="token function">ROUND</span><span class="token punctuation">(</span>wingspan_cm <span class="token operator">*</span> <span class="token number">100.0</span> <span class="token operator">/</span> <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> pct_of_species_total
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<p><strong>Moving averages:</strong> Calculate totals over a sliding window of rows</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    <span class="token function">SUM</span><span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id <span class="token keyword">ROWS</span> <span class="token operator">BETWEEN</span> <span class="token number">1</span> <span class="token keyword">PRECEDING</span> <span class="token operator">AND</span> <span class="token number">1</span> <span class="token keyword">FOLLOWING</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> three_row_sum
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<hr>
+<h2>RANK()</h2>
+<p>The <code>RANK()</code> function assigns ranks to rows within a partition, but unlike <code>ROW_NUMBER()</code>, it handles ties by giving them the same rank. When there are ties, <code>RANK()</code> skips the next rank numbers to maintain the correct total count.</p>
+<h3>Example</h3>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> rank_num
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>rank_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Notice how both sparrows have the same wingspan (30cm) and receive the same rank (1). This is the key behavior of RANK() - tied values get identical ranks.</p>
+<h3>Rank skipping</h3>
+<pre class="language-sql"><code class="language-sql"><span class="token comment">-- Imagine we had more birds with these wingspans: 150, 120, 120, 100, 100, 100, 80</span>
+<span class="token keyword">SELECT</span> 
+    wingspan_cm<span class="token punctuation">,</span>
+    RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> rank_num
+<span class="token keyword">FROM</span> expanded_birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>wingspan_cm</th>
+<th>rank_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>150</td>
+<td>1</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+</tr>
+<tr>
+<td>80</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p>Notice how after two birds tied for rank 2, the next rank is 4 (not 3), and after three birds tied for rank 4, the next rank is 7 (not 5). This preserves the correct relationship between ranks and the actual number of birds that performed better.</p>
+<h3>Common use cases for RANK()</h3>
+<p><strong>Competition rankings:</strong> When you want tied values to share the same rank</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> overall_rank
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<p><strong>Top performers per category:</strong> Find the highest-ranking birds in each species, accounting for ties</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+    <span class="token keyword">SELECT</span> 
+        <span class="token operator">*</span><span class="token punctuation">,</span>
+        RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> species_rank
+    <span class="token keyword">FROM</span> birds
+<span class="token punctuation">)</span> ranked
+<span class="token keyword">WHERE</span> species_rank <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<h2>DENSE_RANK()</h2>
+<p>The <code>DENSE_RANK()</code> function is similar to <code>RANK()</code> in that it assigns the same rank to tied values, but unlike <code>RANK()</code>, it doesn't skip any rank numbers. This means rankings are always consecutive, making it useful when you want a compact ranking system without gaps.</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> dense_rank_num
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>dense_rank_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<h3>Understanding Dense Ranking</h3>
+<p>The key difference from <code>RANK()</code> is that <code>DENSE_RANK()</code> never skips numbers. Here's an example with more data to illustrate:</p>
+<pre class="language-sql"><code class="language-sql"><span class="token comment">-- Using the same expanded dataset: 150, 120, 120, 100, 100, 100, 80</span>
+<span class="token keyword">SELECT</span> 
+    wingspan_cm<span class="token punctuation">,</span>
+    DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> dense_rank_num
+<span class="token keyword">FROM</span> expanded_birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>wingspan_cm</th>
+<th>dense_rank_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>150</td>
+<td>1</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+</tr>
+<tr>
+<td>100</td>
+<td>3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>3</td>
+</tr>
+<tr>
+<td>80</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Notice how after two birds tied for rank 2, the next rank is 3 (not 4 like with <code>RANK()</code>), and after three birds tied for rank 3, the next rank is 4 (not 7). This creates a compact, gapless ranking system.</p>
+<h3>RANK() vs DENSE_RANK() Comparison</h3>
+<p>Here's a side-by-side comparison to show the difference:</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    wingspan_cm<span class="token punctuation">,</span>
+    RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> rank_num<span class="token punctuation">,</span>
+    DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> dense_rank_num
+<span class="token keyword">FROM</span> expanded_birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>wingspan_cm</th>
+<th>rank_num</th>
+<th>dense_rank_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>150</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>120</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>100</td>
+<td>4</td>
+<td>3</td>
+</tr>
+<tr>
+<td>80</td>
+<td>7</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<h3>Common use cases for DENSE_RANK()</h3>
+<p><strong>Categories:</strong> When you want consecutive levels without gaps</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    <span class="token keyword">CASE</span> 
+        <span class="token keyword">WHEN</span> DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token keyword">THEN</span> <span class="token string">'Large'</span>
+        <span class="token keyword">WHEN</span> DENSE_RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">2</span> <span class="token keyword">THEN</span> <span class="token string">'Medium'</span>
+        <span class="token keyword">ELSE</span> <span class="token string">'Small'</span>
+    <span class="token keyword">END</span> <span class="token keyword">AS</span> size_category
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<hr>
+<h2>ROW_NUMBER()</h2>
+<p>The <code>ROW_NUMBER()</code> function assigns a unique sequential number to each row within a partition, starting from 1. Unlike <code>RANK()</code>, <code>ROW_NUMBER()</code> always assigns unique numbers even when there are ties in the data.</p>
+<h3>Example</h3>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> row_num
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>row_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Notice how both sparrows have the same wingspan (30cm), but <code>ROW_NUMBER()</code>still assigns them unique sequential numbers (1 and 2). The ordering within tied values depends on the database's internal row ordering, which can be unpredictable unless you specify additional <code>ORDER BY</code> criteria.</p>
+<h3>Common use cases for ROW_NUMBER()</h3>
+<p>Deduplication: Remove duplicate rows by keeping only the first occurrence</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+    <span class="token keyword">SELECT</span> 
+        <span class="token operator">*</span><span class="token punctuation">,</span>
+        ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species<span class="token punctuation">,</span> wingspan_cm <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> rn
+    <span class="token keyword">FROM</span> birds
+<span class="token punctuation">)</span> ranked
+<span class="token keyword">WHERE</span> rn <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<p>Top-N per group: Get the largest bird from each species</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token operator">*</span>
+<span class="token keyword">FROM</span> <span class="token punctuation">(</span>
+    <span class="token keyword">SELECT</span> 
+        <span class="token operator">*</span><span class="token punctuation">,</span>
+        ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> rn
+    <span class="token keyword">FROM</span> birds
+<span class="token punctuation">)</span> ranked
+<span class="token keyword">WHERE</span> rn <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span></code></pre>
+<hr>
+<h2>RANK() vs ROW_NUMBER()</h2>
+<p>Here's a side-by-side comparison to illustrate the key difference:</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    RANK<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> rank_num<span class="token punctuation">,</span>
+    ROW_NUMBER<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> wingspan_cm <span class="token keyword">DESC</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> row_num
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>rank_num</th>
+<th>row_num</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2>LEAD() and LAG()</h2>
+<p>The <code>LEAD()</code> and <code>LAG()</code> functions allow you to access values from other rows within the same result set. <code>LEAD()</code> looks forward to the next row(s), while <code>LAG()</code> looks backward to the previous row(s). These functions are particularly useful for comparing consecutive rows or calculating differences between periods.</p>
+<h3>Example</h3>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    LAG<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> prev_wingspan<span class="token punctuation">,</span>
+    LEAD<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> next_wingspan
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>prev_wingspan</th>
+<th>next_wingspan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>NULL</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>120</td>
+<td>NULL</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>NULL</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>30</td>
+<td>NULL</td>
+</tr>
+</tbody>
+</table>
+<p>Notice how the first row in each partition has NULL for prev_wingspan (no previous row), and the last row has NULL for next_wingspan (no next row).</p>
+<h3>Using offsets and default values</h3>
+<p>You can specify how many rows to look ahead or behind, and provide default values for when there's no data:</p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    LAG<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> prev_wingspan<span class="token punctuation">,</span>
+    LEAD<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> next_wingspan
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<table>
+<thead>
+<tr>
+<th>species</th>
+<th>bird_id</th>
+<th>wingspan_cm</th>
+<th>prev_wingspan</th>
+<th>next_wingspan</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eagle</td>
+<td>3</td>
+<td>120</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Eagle</td>
+<td>4</td>
+<td>100</td>
+<td>120</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>1</td>
+<td>30</td>
+<td>0</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Sparrow</td>
+<td>2</td>
+<td>30</td>
+<td>30</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3>Common use cases for LEAD() and LAG()</h3>
+<p><strong>Calculate differences between consecutive rows:</strong></p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    species<span class="token punctuation">,</span>
+    bird_id<span class="token punctuation">,</span>
+    wingspan_cm<span class="token punctuation">,</span>
+    wingspan_cm <span class="token operator">-</span> LAG<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> wingspan_change
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<p><strong>Compare current value with next/previous:</strong></p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    <span class="token keyword">CASE</span> 
+        <span class="token keyword">WHEN</span> wingspan_cm <span class="token operator">></span> LAG<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> 
+        <span class="token keyword">THEN</span> <span class="token string">'Increased'</span>
+        <span class="token keyword">WHEN</span> wingspan_cm <span class="token operator">&lt;</span> LAG<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> 
+        <span class="token keyword">THEN</span> <span class="token string">'Decreased'</span>
+        <span class="token keyword">ELSE</span> <span class="token string">'Same or First'</span>
+    <span class="token keyword">END</span> <span class="token keyword">AS</span> wingspan_trend
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<p><strong>Find the first and last values in a group:</strong></p>
+<pre class="language-sql"><code class="language-sql"><span class="token keyword">SELECT</span> 
+    <span class="token operator">*</span><span class="token punctuation">,</span>
+    FIRST_VALUE<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id<span class="token punctuation">)</span> <span class="token keyword">AS</span> first_wingspan<span class="token punctuation">,</span>
+    LAST_VALUE<span class="token punctuation">(</span>wingspan_cm<span class="token punctuation">)</span> <span class="token keyword">OVER</span> <span class="token punctuation">(</span><span class="token keyword">PARTITION</span> <span class="token keyword">BY</span> species <span class="token keyword">ORDER</span> <span class="token keyword">BY</span> bird_id 
+                                 <span class="token keyword">ROWS</span> <span class="token operator">BETWEEN</span> <span class="token keyword">UNBOUNDED</span> <span class="token keyword">PRECEDING</span> <span class="token operator">AND</span> <span class="token keyword">UNBOUNDED</span> <span class="token keyword">FOLLOWING</span><span class="token punctuation">)</span> <span class="token keyword">AS</span> last_wingspan
+<span class="token keyword">FROM</span> birds<span class="token punctuation">;</span></code></pre>
+<hr>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
