@@ -45,6 +45,7 @@ There's also a link to my photography portfolio, which is a different static web
 
 ## Other stuff 🗃️
 [📷 My photos](https://photos.bradleycorrigan.co.uk)
+
 [💻 GitHub](https://github.com/bradleycorrigan)
 
 {% if collections.embeds and collections.embeds.length > 0 %}
