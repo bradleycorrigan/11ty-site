@@ -32,14 +32,14 @@ There's also a link to my photography portfolio, which is a different static web
 
 ---
 
-## All Posts 📝
+<!-- ## All Posts 📝
 {% if collections.posts and collections.posts.length > 0 %}
   {% for post in collections.posts %}
   [{{ post.data.title }}]({{ post.url}})
   {% endfor %}
 {% else %}
 <p>No blog posts available.</p>
-{% endif %}
+{% endif %} -->
 
 ---
 
