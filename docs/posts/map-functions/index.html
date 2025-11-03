@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Functions</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+                    <li><a href="/posts/map-functions/">Map Functions</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Map Functions</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/python/" class="tag">#python</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <h1>What is a map() function?</h1>
+<p>It's a built in Python function that performs a function on each item in an iterable (e.g. string, list, tuple - it'll work on any iterable) and returns a map object (an iterator).</p>
+<h3>Basic Syntax</h3>
+<pre class="language-python"><code class="language-python"><span class="token builtin">map</span><span class="token punctuation">(</span>function<span class="token punctuation">,</span> iterable<span class="token punctuation">,</span> <span class="token punctuation">[</span>iterable2<span class="token punctuation">,</span> iterable3<span class="token punctuation">,</span> iterable4<span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+<h3>Example</h3>
+<pre class="language-python"><code class="language-python"><span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">def</span> <span class="token function">double</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     <span class="token keyword">return</span> x <span class="token operator">*</span> <span class="token number">2</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>     
+<span class="token operator">>></span><span class="token operator">></span> numbers <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> doubled_numbers <span class="token operator">=</span> <span class="token builtin">map</span><span class="token punctuation">(</span>double<span class="token punctuation">,</span> numbers<span class="token punctuation">)</span>
+<span class="token operator">>></span><span class="token operator">></span> <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>doubled_numbers<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span>
+<span class="token operator">>></span><span class="token operator">></span> </code></pre>
+<h2>Isn't this pretty similar to a list comprehension?</h2>
+<p>Yes, sort of. They both transform iterables like lists but they differ in how they're written and how they perform,</p>
+<p>List comprehensions are concise, the logic is applied in one line (i.e. the function is defined in the comprehension); map() applies a function (defined upstream or with lambda) and returns a map object, then wrapping it in list() materialises the results.</p>
+<div class="tip">
+<p><code>map() </code>can be slightly faster, but comprehensions can be preferred for readability.</p>
+</div>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
