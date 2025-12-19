@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pyplot</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/map-functions/">Map Functions</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+                    <li><a href="/posts/pyplot/">pyplot</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>pyplot</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/python/" class="tag">#python</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <h1>Matplotlib Pyplot Cheat Sheet</h1>
+<h2>1. Basic Plotting</h2>
+<p>To plot data points with specific styles (e.g., red circles) and define the viewing window:</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># First list = x values [1, 2, 3, 4]</span>
+<span class="token comment"># Second list = y values [1, 4, 9, 16]</span>
+<span class="token comment"># 'ro' = red (r) circles (o)</span>
+plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">'ro'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Set the viewing window boundaries</span>
+<span class="token comment"># Format: (x-min, x-max, y-min, y-max)</span>
+<span class="token comment"># This example shows x from 0 to 6 and y from 0 to 20</span>
+plt<span class="token punctuation">.</span>axis<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Show the plot on screen</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span></code></pre>
+<h2>2. Titles and Axis Labels</h2>
+<p>Add text to describe what your plot shows:</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># Add a title at the top of the plot</span>
+plt<span class="token punctuation">.</span>title<span class="token punctuation">(</span><span class="token string">'this is a title'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Label what the x-axis represents</span>
+plt<span class="token punctuation">.</span>xlabel<span class="token punctuation">(</span><span class="token string">'date'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Label what the y-axis represents</span>
+plt<span class="token punctuation">.</span>ylabel<span class="token punctuation">(</span><span class="token string">'inbound volume'</span><span class="token punctuation">)</span></code></pre>
+<h2>3. Legends</h2>
+<p>Legends help identify which line is which when you have multiple lines on one plot.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># The 'label' parameter gives each line a name for the legend</span>
+plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'red'</span><span class="token punctuation">,</span> label<span class="token operator">=</span><span class="token string">'Line Y'</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>x<span class="token punctuation">,</span> z<span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'green'</span><span class="token punctuation">,</span> label<span class="token operator">=</span><span class="token string">'Line Z'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Display the legend box (shows the labels you defined above)</span>
+plt<span class="token punctuation">.</span>legend<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Move the legend to a specific position</span>
+<span class="token comment"># (0, 0) = bottom-left corner, (1, 1) = top-right corner</span>
+plt<span class="token punctuation">.</span>legend<span class="token punctuation">(</span>bbox_to_anchor <span class="token operator">=</span> <span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span></code></pre>
+<h2>4. Tick Parameter Modification</h2>
+<p>Customize how the numbers and tick marks look on your axes.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># axis='x' means only change the x-axis (use 'y' or 'both' for others)</span>
+<span class="token comment"># direction='out' makes tick marks point outward</span>
+<span class="token comment"># color='red' changes the tick mark color to red</span>
+<span class="token comment"># labelsize='large' makes the numbers bigger</span>
+<span class="token comment"># labelcolor='purple' changes the number color to purple</span>
+<span class="token comment"># labelrotation=30 tilts the numbers 30 degrees</span>
+plt<span class="token punctuation">.</span>tick_params<span class="token punctuation">(</span>axis<span class="token operator">=</span><span class="token string">'x'</span><span class="token punctuation">,</span> direction<span class="token operator">=</span><span class="token string">'out'</span><span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token string">'red'</span><span class="token punctuation">,</span> 
+                labelsize<span class="token operator">=</span><span class="token string">'large'</span><span class="token punctuation">,</span> labelcolor<span class="token operator">=</span><span class="token string">'purple'</span><span class="token punctuation">,</span> labelrotation<span class="token operator">=</span><span class="token number">30</span><span class="token punctuation">)</span></code></pre>
+<h2>5. Saving Figures</h2>
+<p>Save your plot as an image file instead of just showing it on screen.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># Save with default settings (usually 100 dpi)</span>
+plt<span class="token punctuation">.</span>savefig<span class="token punctuation">(</span><span class="token string">'name.png'</span><span class="token punctuation">)</span>
+
+<span class="token comment"># Save with better quality and make sure nothing gets cut off</span>
+<span class="token comment"># dpi=128 makes the image higher resolution (higher = better quality)</span>
+<span class="token comment"># bbox_inches='tight' prevents labels/legends from being cropped</span>
+plt<span class="token punctuation">.</span>savefig<span class="token punctuation">(</span><span class="token string">'my_lineplot.png'</span><span class="token punctuation">,</span> dpi<span class="token operator">=</span><span class="token number">128</span><span class="token punctuation">,</span> bbox_inches<span class="token operator">=</span><span class="token string">'tight'</span><span class="token punctuation">)</span></code></pre>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
