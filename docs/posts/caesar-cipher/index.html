@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Cipher</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+                    <li><a href="/posts/map-functions/">Map Functions</a></li>
+                
+                    <li><a href="/posts/caesar-cipher/">Caesar Cipher</a></li>
+                
+                    <li><a href="/posts/pyplot/">pyplot</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Caesar Cipher</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/python/" class="tag">#python</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <h1>What is a Caesar Cipher?</h1>
+<p>A Caesar Cipher is a way of encoding messages by shifting all the letters across by a set number. E.g. with a shift of 3,<code>hello world</code> becomes <code>khoor zruog</code>.
+It's named as such because apparently Caesar used it. Anyway, I've been focussing on my dbt/sql a lot recently and haven't had much chance to practice Python and
+this constantly leads to me atrophying basically everything I learn, so this quite common Python challenge ended up being a lot harder for me than it should've. I think there's definitely something there about finding ways to incorporate Python more into my daily work life but that feels like a separate post.</p>
+<h3>The challenge</h3>
+<p>The challenge is to take a message, decode it, and encode a response.</p>
+<pre class="language-python"><code class="language-python"><span class="token comment"># We need to define a string of the entire alphabet first </span>
+alphabet <span class="token operator">=</span> <span class="token string">'abcdefghijklmnopqrstuvqxyz'</span>
+
+<span class="token comment"># Now, let's make a function to handle encoding the message</span>
+<span class="token comment"># It needs to take two inputs, the message we'd like to encode, and how much we'd like to offset it by </span>
+<span class="token keyword">def</span> <span class="token function">encode_message</span><span class="token punctuation">(</span>message<span class="token punctuation">,</span> offset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    result <span class="token operator">=</span> <span class="token string">''</span> <span class="token comment"># an empty string to store the result</span>
+    <span class="token keyword">for</span> char <span class="token keyword">in</span> message<span class="token punctuation">:</span> <span class="token comment"># start a for loop to loop through the message</span>
+        <span class="token keyword">if</span> char <span class="token keyword">in</span> alphabet<span class="token punctuation">:</span> 
+            new_index <span class="token operator">=</span> alphabet<span class="token punctuation">.</span>index<span class="token punctuation">(</span>char<span class="token punctuation">)</span> <span class="token operator">+</span> offset<span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">26</span>
+            <span class="token comment"># if the character is in the alphabet, find it's place (using the alphabet var), and shift it along, use the modulo to make sure we don't spill over*</span>
+            result <span class="token operator">+=</span> alphabet<span class="token punctuation">[</span>new_index<span class="token punctuation">]</span> <span class="token comment"># add the new letter to the result</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            result <span class="token operator">+=</span> char <span class="token comment"># if the char isn't in the alphabet, it stays as before (e.g. `!`)</span>
+    <span class="token keyword">return</span> result 
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>caesar_cipher<span class="token punctuation">(</span><span class="token string">"hello world!"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token comment"># Output: "khoor zruog"</span>
+
+<span class="token comment"># Now, decoding messages. We don't need to recode the logic, we can reuse the function</span>
+<span class="token keyword">def</span> <span class="token function">caesar_decipher</span><span class="token punctuation">(</span>message <span class="token operator">-</span>offset<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> caesar_cipher<span class="token punctuation">(</span>message<span class="token punctuation">,</span> <span class="token operator">-</span>shift<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>caesar_decipher<span class="token punctuation">(</span><span class="token string">"khoor zruog"</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>  <span class="token comment"># Output: "hello world"</span>
+</code></pre>
+<h2>What if we don't know the offset?</h2>
+<hr>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
