@@ -4,22 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map Functions</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css?v=1795008165846">
     <script type="module">
-        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
-        mermaid.initialize({ startOnLoad: true });
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
 
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
-                const parent = block.parentNode;
-                const graphDef = block.textContent;
-                const div = document.createElement("div");
-                div.classList.add("mermaid");
-                div.textContent = graphDef;
-                parent.replaceWith(div);
-            });
-            mermaid.init();
+        // Diagrams take their colours from the site theme and redraw when you switch light/dark
+        const blocks = [...document.querySelectorAll("pre code.language-mermaid")].map(code => {
+            const mount = document.createElement("div");
+            mount.className = "mermaid-diagram";
+            const src = code.textContent;
+            code.parentNode.replaceWith(mount);
+            return { mount, src };
         });
+        let n = 0, gen = 0;
+        async function draw() {
+            if (!blocks.length) return;
+            const mine = ++gen;
+            const css = getComputedStyle(document.body);
+            const v = name => css.getPropertyValue(name).trim();
+            const dark = document.body.classList.contains("dark-theme");
+            mermaid.initialize({
+                startOnLoad: false, securityLevel: "strict", theme: "base",
+                fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
+                flowchart: { useMaxWidth: true, curve: "basis", padding: 12 },
+                themeVariables: {
+                    darkMode: dark, fontSize: "15px",
+                    background: v("--base-bg"),
+                    primaryColor: v("--code-bg"), mainBkg: v("--code-bg"),
+                    primaryTextColor: v("--base-fg"), textColor: v("--base-fg"), titleColor: v("--base-accent"),
+                    primaryBorderColor: v("--base-accent"), nodeBorder: v("--base-accent"),
+                    lineColor: v("--base-muted"),
+                    clusterBkg: v("--base-bg"), clusterBorder: v("--border-color"),
+                    edgeLabelBackground: v("--code-bg"),
+                },
+                themeCSS: `
+                    .node rect, .node circle, .node polygon { stroke-width: 1.5px; rx: 8px; ry: 8px; }
+                    .node .label { font-weight: 500; }
+                    .cluster rect { rx: 12px; ry: 12px; stroke-width: 1.5px; stroke-dasharray: 5 4; }
+                    .cluster-label .nodeLabel, .cluster-label span { color: ${v("--base-accent")} !important; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
+                    .edgeLabel, .edgeLabel p { font-size: 12px; color: ${v("--base-muted")}; }
+                    .flowchart-link { stroke-width: 1.5px; }
+                    marker path { fill: ${v("--base-muted")}; stroke: none; }
+                `,
+            });
+            for (const b of blocks) {
+                const { svg } = await mermaid.render("mmd-" + n++, b.src);
+                if (mine === gen) b.mount.innerHTML = svg;
+            }
+        }
+        draw();
+        new MutationObserver(draw).observe(document.body, { attributes: true, attributeFilter: ["class"] });
     </script>
 </head>
 <body class="light-theme"> <!-- Default theme class -->
@@ -30,38 +64,60 @@
 
     <!-- Sidebar -->
     <div class="sidebar collapsed">
-        <div class="sidebar-header">
-            📖 Menu
-        </div>
-        <nav>
+        <nav aria-label="Site">
+            <ul class="sidebar-top">
+                <li><a href="/">Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">Photos</a></li>
+                <li><a href="https://github.com/bradleycorrigan">GitHub</a></li>
+            </ul>
+            
+            <p class="sidebar-group">SQL</p>
             <ul>
-                <!-- Hardcoded link for the homepage -->
-                <li><a href="/">🏡 Home</a></li>
-                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
                 
-                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                <li><a href="/posts/window-functions/">Window Functions</a></li>
                 
-                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
-                
-                    <li><a href="/posts/python-loops/">Loops</a></li>
-                
-                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
-                
-                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
-                
-                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
-                
-                    <li><a href="/posts/window-functions/">Window Functions</a></li>
-                
-                    <li><a href="/posts/map-functions/">Map Functions</a></li>
-                
-                    <li><a href="/posts/pyplot/">pyplot</a></li>
-                
-                    <li><a href="/posts/caesar-cipher/">Caesar Cipher</a></li>
-                
-                    <li><a href="/posts/building-control-room/">Building Control Room 🎛️</a></li>
+                <li><a href="/posts/sql-joins/">SQL Joins</a></li>
                 
             </ul>
+            
+            <p class="sidebar-group">data concepts</p>
+            <ul>
+                
+                <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+            </ul>
+            
+            <p class="sidebar-group">projects</p>
+            <ul>
+                
+                <li><a href="/posts/building-control-room/">Building Control Room 🎛️</a></li>
+                
+            </ul>
+            
+            <p class="sidebar-group">python</p>
+            <ul>
+                
+                <li><a href="/posts/caesar-cipher/">Caesar Cipher</a></li>
+                
+                <li><a href="/posts/pyplot/">pyplot</a></li>
+                
+                <li><a href="/posts/map-functions/" aria-current="page">Map Functions</a></li>
+                
+                <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                <li><a href="/posts/python-loops/">Loops</a></li>
+                
+            </ul>
+            
+            <p class="sidebar-group">travel</p>
+            <ul>
+                
+                <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+            </ul>
+            
         </nav>
     </div>
 

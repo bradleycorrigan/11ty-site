@@ -1,11 +1,8 @@
 ---
 title: Building Control Room 🎛️
 date: 2026-11-18
-tags:
-  - typescript
-  - electron
-  - claude-code
-  - side-project
+bodyClass: longform
+tags: projects
 ---
 
 <p class="byline">18 Nov 2026 · about 8 minutes</p>
@@ -52,7 +49,7 @@ So status comes from two places:
 - **The session files, always.** The app watches them, and checks again every 30 seconds. Without hooks you lose "done" and "errored", but everything else still works.
 
 ```mermaid
-flowchart LR
+flowchart TB
   you(["You"])
   subgraph app["Control Room"]
     ui["Interface<br/>(no access to the Mac)"]
@@ -69,16 +66,16 @@ flowchart LR
   ext["GitHub CLI · Jira · your editor"]
   you --> ui
   ui -- "asks over IPC" --> main
+  main -- "status" --> ui
+  main --> ext
   main -- "starts" --> tmux
   tmux --> agent
   agent -- "edits" --> wt
-  agent -- "hook events" --> hook
   agent -- "writes" --> files
+  agent -- "hook events" --> hook
   files --> watch
   hook --> main
   watch --> main
-  main -- "status" --> ui
-  main --> ext
 ```
 
 <p class="caption">How a session runs. The app starts the agent in tmux, then listens: hooks for instant updates, the session files as a fallback.</p>

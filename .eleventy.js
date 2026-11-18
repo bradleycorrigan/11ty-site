@@ -17,6 +17,9 @@ module.exports = function(eleventyConfig) {
 eleventyConfig.setLibrary("md", md);
 
 
+  // Changes on every build so browsers fetch the new stylesheet
+  eleventyConfig.addGlobalData("buildTime", () => Date.now());
+
   // Date filter used by tags.njk ('YYYY-MM-DD' or 'MMMM DD, YYYY')
   eleventyConfig.addFilter("date", (value, format) => {
     const d = new Date(value);
