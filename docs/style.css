@@ -627,3 +627,10 @@ body.dark-theme .step-text.is-error { color: #ffb4a8; }
     .hint { display: none; }
     .editor, .code-view { height: 300px; }
 }
+
+/* Phone screenshots, three across */
+.phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; margin: 1.8em -60px .4em; }
+.phones figure.shot { margin: 0; }
+.phones figure.shot img { border-radius: 14px; }
+@media (max-width: 1000px) { .phones { margin-left: 0; margin-right: 0; } }
+@media (max-width: 600px) { .phones { grid-template-columns: 1fr 1fr; } }

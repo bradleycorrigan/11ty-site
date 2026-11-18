@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulseboard, my workout tracker 🏋️ · Bradley Corrigan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/style.css?v=1795010357829">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+
+        // Diagrams take their colours from the site theme and redraw when you switch light/dark
+        const blocks = [...document.querySelectorAll("pre code.language-mermaid")].map(code => {
+            const mount = document.createElement("div");
+            mount.className = "mermaid-diagram";
+            const src = code.textContent;
+            code.parentNode.replaceWith(mount);
+            return { mount, src };
+        });
+        let n = 0, gen = 0;
+        async function draw() {
+            if (!blocks.length) return;
+            const mine = ++gen;
+            const css = getComputedStyle(document.body);
+            const v = name => css.getPropertyValue(name).trim();
+            const dark = document.body.classList.contains("dark-theme");
+            mermaid.initialize({
+                startOnLoad: false, securityLevel: "strict", theme: "base",
+                fontFamily: 'Inter, system-ui, sans-serif',
+                flowchart: { useMaxWidth: true, curve: "basis", padding: 12 },
+                themeVariables: {
+                    darkMode: dark, fontSize: "15px",
+                    background: v("--base-bg"),
+                    primaryColor: v("--code-bg"), mainBkg: v("--code-bg"),
+                    primaryTextColor: v("--base-fg"), textColor: v("--base-fg"), titleColor: v("--base-accent"),
+                    primaryBorderColor: v("--base-accent"), nodeBorder: v("--base-accent"),
+                    lineColor: v("--base-muted"),
+                    clusterBkg: v("--base-bg"), clusterBorder: v("--border-color"),
+                    edgeLabelBackground: v("--code-bg"),
+                },
+                themeCSS: `
+                    .node rect, .node circle, .node polygon { stroke-width: 1.5px; rx: 8px; ry: 8px; }
+                    .node .label { font-weight: 500; }
+                    .cluster rect { rx: 12px; ry: 12px; stroke-width: 1.5px; stroke-dasharray: 5 4; }
+                    .cluster-label .nodeLabel, .cluster-label span { color: ${v("--base-accent")} !important; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; font-size: 12px; }
+                    .edgeLabel, .edgeLabel p { font-size: 12px; color: ${v("--base-muted")}; }
+                    .flowchart-link { stroke-width: 1.5px; }
+                    marker path { fill: ${v("--base-muted")}; stroke: none; }
+                `,
+            });
+            for (const b of blocks) {
+                const { svg } = await mermaid.render("mmd-" + n++, b.src);
+                if (mine === gen) b.mount.innerHTML = svg;
+            }
+        }
+        draw();
+        new MutationObserver(draw).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    </script>
+</head>
+<body class="light-theme">
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-name" href="/">Bradley Corrigan</a>
+            <nav class="site-nav" aria-label="Site">
+                <a href="/#writing">Writing</a>
+                <a href="/#made">Projects</a>
+                <a href="https://photos.bradleycorrigan.co.uk">Photos</a>
+                <a href="https://github.com/bradleycorrigan">GitHub</a>
+                <button type="button" class="theme-toggle" onclick="toggleDarkMode()" aria-label="Switch between light and dark">
+                    <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                    <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="wrap">
+    
+        <article>
+            <header class="post-header">
+                <h1>Pulseboard, my workout tracker 🏋️</h1>
+                <p class="post-meta">
+                    <time datetime="2026-11-18">18 November 2026</time>
+                    <span aria-hidden="true">·</span>
+                    <span>about 5 minutes</span>
+                    
+                    <a class="topic" href="/tags/projects/">projects</a>
+                    
+                </p>
+            </header>
+            <div class="post-body">
+                <p class="lede">I pay for a gym membership every month, and I wanted a straight answer to one question: am I actually getting my money's worth? So I built a small app to log every session and tell me.</p>
+<p>Pulseboard is a workout tracker made for exactly one person: me. I log a gym session, a swim, or a sauna in a couple of taps, plus the occasional weigh-in, and it shows me how much value I've had from the membership this month and how my weight is trending. It started life in June as a quick weekend project and has been rebuilt twice since, most recently with Claude Code doing most of the typing.</p>
+<div class="phones">
+  <figure class="shot">
+    <img src="/images/pulseboard/log-paper.jpg" width="780" height="1328" alt="The Log screen in the Paper theme: this month's workouts, value, and weigh-ins at the top, then a form to log a new workout with buttons for each type of session and its price.">
+  </figure>
+  <figure class="shot">
+    <img src="/images/pulseboard/value-paper.jpg" width="780" height="922" loading="lazy" alt="The Membership value card: £103.70 of value against a £75 fee, marked as paid off on 6 November, with a chart of this month against last month.">
+  </figure>
+  <figure class="shot">
+    <img src="/images/pulseboard/weight-paper-night.jpg" width="780" height="1031" loading="lazy" alt="The Weight card in the dark Paper Night theme: a trend line through weekly weigh-ins, the rate per week, and an estimate of when the goal will be reached.">
+  </figure>
+</div>
+<p class="caption">Logging a session, the membership maths, and the weight trend. Every screenshot here uses made-up demo data.</p>
+<h2>The idea: price every visit 💷</h2>
+<p>The trick that makes the whole thing work is giving every session a price: what it would have cost me to pay as I go. A gym visit is £15, a pool swim is £6.80, a lido swim is £6.40, and a sauna is £18.70. Add those up over a month and compare the total to the membership fee, and you get a very honest number.</p>
+<p>That turns &quot;I should go more&quot; into something I can see. The Membership value card shows how much I've had back this month, the day I paid it off, my cost per visit, and whether I'm ahead of or behind last month by the same day.</p>
+<p>The second goal is weight. Weigh-ins are noisy day to day, so the app draws a smoothed trend line through them and works out the rate per week from the last four weeks. From that it estimates when I'll hit my goal at the current pace.</p>
+<h2>Version one: quick, public, and slow 🐌</h2>
+<p>The first version was a FastAPI app with a Supabase database, charts drawn with Plotly, and hosting on Vercel's free tier. It did the job, but it had two problems:</p>
+<ul>
+<li><strong>It was slow to wake up.</strong> Vercel runs apps like this as serverless functions, so after a quiet spell the first visit took about eight seconds. That's a long time to stand at a gym reception holding your phone.</li>
+<li><strong>It had no sign-in.</strong> Anyone with the address could see my data, which for health data isn't great.</li>
+</ul>
+<h2>Moving it onto my own server 🖥️</h2>
+<p>I already run a small server for my notes app: a free virtual machine on Oracle Cloud's Always Free tier, with two ARM cores and 12 GB of memory. So Pulseboard moved in next door.</p>
+<pre class="language-mermaid"><code class="language-mermaid"><span class="token keyword">flowchart</span> TB
+  phone<span class="token text string">(["My phone"])</span>
+  <span class="token keyword">subgraph</span> vm<span class="token text string">["My VM"]</span>
+    caddy<span class="token text string">["Caddy&lt;br/>HTTPS and routing"]</span>
+    app<span class="token text string">["Pulseboard&lt;br/>FastAPI, kept running by systemd"]</span>
+    memos<span class="token text string">["Memos&lt;br/>my notes app"]</span>
+  <span class="token keyword">end</span>
+  db<span class="token text string">[("Supabase&lt;br/>Postgres")]</span>
+  oura<span class="token text string">["Oura API&lt;br/>(coming soon)"]</span>
+  phone <span class="token arrow operator">--></span> caddy
+  caddy <span class="token arrow operator">--></span> app
+  app <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"checks my password"</span> <span class="token arrow operator">--></span></span> memos
+  app <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"reads and writes"</span> <span class="token arrow operator">--></span></span> db
+  oura <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">-.</span> <span class="token label property">"daily sync"</span> <span class="token arrow operator">.-></span></span> app</code></pre>
+<p class="caption">Caddy serves the app over HTTPS, the app stays running all the time, and the data still lives in Supabase.</p>
+<ul>
+<li><strong>It's always on.</strong> The app runs as a normal service that never goes to sleep, so pages open instantly.</li>
+<li><strong>One login for everything.</strong> Pulseboard signs me in with the same account as my notes app, then keeps me signed in for a month. Only my account is allowed in.</li>
+<li><strong>The database stayed put.</strong> Supabase was never the problem, so it's still where everything is stored. The app talks to it directly with plain SQL.</li>
+<li><strong>Free means you have to look busy.</strong> Oracle reclaims free machines that sit idle for a week, so the server runs a small, low-priority job that keeps it just busy enough to count as in use.</li>
+</ul>
+<p>Having the app on a machine I control has another upside: Claude Code can work on it in place. It edits the code, restarts the service, and checks the result on my phone-sized screen, all in one go.</p>
+<h2>The style 🎨</h2>
+<p>The look came in two steps.</p>
+<p>First, I gave it the design language from <a href="/posts/building-control-room/">Control Room</a>: the same layout rules, the same components, and all 19 of its editor themes. Then I gave it a look of its own, which I call <strong>Paper</strong>: warm off-white like a notebook, Instrument Serif for headings and big numbers, and IBM Plex Mono for everything else. It's now the default, with a matching dark version, Paper Night, for evenings.</p>
+<div class="phones">
+  <figure class="shot">
+    <img src="/images/pulseboard/theme-tokyo-night.jpg" width="780" height="1328" loading="lazy" alt="The Insights screen in the Tokyo Night theme.">
+  </figure>
+  <figure class="shot">
+    <img src="/images/pulseboard/theme-rose-pine-dawn.jpg" width="780" height="1328" loading="lazy" alt="The Insights screen in the Rosé Pine Dawn theme.">
+  </figure>
+  <figure class="shot">
+    <img src="/images/pulseboard/theme-catppuccin-mocha.jpg" width="780" height="1328" loading="lazy" alt="The Insights screen in the Catppuccin Mocha theme.">
+  </figure>
+</div>
+<p class="caption">Three of the editor themes it inherited from Control Room: Tokyo Night, Rosé Pine Dawn, and Catppuccin Mocha. You can follow the phone's light or dark setting, or pick one and keep it.</p>
+<p>A few things made the biggest difference to how it feels:</p>
+<ul>
+<li><strong>It's built for a phone first.</strong> I use it standing in a changing room, so everything is big enough to tap with a thumb and the important number is always at the top.</li>
+<li><strong>Logging feels instant.</strong> When I tap Log workout, the entry appears straight away while it saves in the background. If saving fails, it's taken back out and I get a Try again button.</li>
+<li><strong>Charts are hand-made.</strong> I dropped Plotly and drew the charts myself, which made the pages much lighter and let every chart match the theme.</li>
+<li><strong>It's tested against awkward data.</strong> A demo copy runs with fake data, and a switch fills it with the worst cases (no entries, one entry, or silly numbers) so I can see nothing breaks.</li>
+</ul>
+<div class="shot-pair">
+  <figure class="shot">
+    <img src="/images/pulseboard/days-paper.jpg" width="780" height="789" loading="lazy" alt="The Workout days card: a calendar heatmap of the last three months, shaded by how many sessions happened each day.">
+    <figcaption>Workout days. Tap any day to see what I did.</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/images/pulseboard/months-paper.jpg" width="780" height="1303" loading="lazy" alt="The Month by month card: each month's total value, number of visits, cost per visit, and a breakdown by type of session.">
+    <figcaption>Month by month, against the fee.</figcaption>
+  </figure>
+</div>
+<h2>Next: the Oura ring 💍</h2>
+<p>We've ordered an Oura ring and we're waiting for it to arrive. Once it does, I want Pulseboard to pull in my daily numbers from Oura's official API, so they sit next to my workouts:</p>
+<ul>
+<li><strong>A Today screen</strong> with my readiness score and a simple suggestion, like &quot;good day to push&quot; or &quot;take it easy&quot;.</li>
+<li><strong>Sleep, HRV, and resting heart rate</strong>, so I can see how training and recovery line up over time.</li>
+<li><strong>Workouts matched automatically.</strong> Oura notices when you're exercising, so a gym session could pick up its heart rate and calories by itself.</li>
+<li><strong>Free exercise counts too.</strong> Oura can spot walks, runs, and bike rides. Those will be logged at £0, so they show up in my activity without inflating the membership maths.</li>
+</ul>
+<p>The plan is a small job on the server that checks Oura every morning and saves anything new into Supabase. First, though, the ring needs a couple of weeks on my finger to learn what normal looks like for me. I'll write that part up when it's built.</p>
+<hr>
+<p class="signoff">FastAPI, Postgres on Supabase, and plain JavaScript, served by Caddy from a free Oracle Cloud VM. Every screenshot here uses the app's demo data.</p>
+
+            </div>
+            <footer class="post-footer"><a href="/#writing">← All writing</a></footer>
+        </article>
+    
+    </main>
+
+    <footer class="site-footer wrap">Built with Eleventy. Hosted on GitHub Pages.</footer>
+
+    <script src="/script.js?v=1795010357829"></script>
+</body>
+</html>
