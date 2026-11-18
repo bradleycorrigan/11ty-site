@@ -6,7 +6,7 @@ templateEngineOverride: njk
 ---
 
 <section class="hero">
-  <h1>Hi, I'm Bradley. I write down what I'm learning so I don't forget it.</h1>
+  <h1>Notes about stuff I'm doing</h1>
   <p>Mostly data: SQL, Python and analytics engineering. Sometimes travel, and the odd thing I've built.</p>
 </section>
 
