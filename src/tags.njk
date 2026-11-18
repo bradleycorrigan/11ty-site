@@ -6,36 +6,22 @@ pagination:
 permalink: /tags/{{ tag | slugify }}/
 layout: base.njk
 eleventyComputed:
-  title: "Posts tagged '{{ tag }}'"
+  title: "{{ tag | replace('-', ' ') | capitalize }}"
 ---
 
-<p>{{ collections.postsByTag[tag].length }} post{% if collections.postsByTag[tag].length != 1 %}s{% endif %} tagged with "{{ tag }}"</p>
-
+<div class="section-head">
+  <h2 class="section-label">Posts about {{ tag | replace("-", " ") }}</h2>
+  <span>{{ collections.postsByTag[tag].length }} post{% if collections.postsByTag[tag].length != 1 %}s{% endif %}</span>
+</div>
 <ul class="post-list">
 {% for post in collections.postsByTag[tag] | reverse %}
   <li>
-    <article>
-      <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-      {% if post.date %}
-        <time datetime="{{ post.date | date('YYYY-MM-DD') }}">
-          {{ post.date | date('MMMM DD, YYYY') }}
-        </time>
-      {% endif %}
-      {% if post.data.description %}
-        <p>{{ post.data.description }}</p>
-      {% endif %}
-      {% if post.data.tags %}
-        <div class="tags">
-          {% for postTag in post.data.tags %}
-            {% if postTag != "posts" %}
-              <a href="/tags/{{ postTag | slugify }}/" class="tag">#{{ postTag }}</a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      {% endif %}
-    </article>
+    <a href="{{ post.url }}">
+      <time datetime="{{ post.date | date('YYYY-MM-DD') }}">{{ post.date | date('short') }}</time>
+      <span class="post-title">{{ post.data.title }}</span>
+    </a>
   </li>
 {% endfor %}
 </ul>
 
-<p><a href="/tags/">← All tags</a></p>
+<p class="post-footer"><a href="/tags/">← All topics</a></p>

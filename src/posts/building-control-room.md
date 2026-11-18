@@ -1,11 +1,8 @@
 ---
 title: Building Control Room 🎛️
 date: 2026-11-18
-bodyClass: longform
 tags: projects
 ---
-
-<p class="byline">18 Nov 2026 · about 8 minutes</p>
 
 <p class="lede">In September I had a handful of Claude Code agents running in a handful of terminal tabs, and no idea which of them was waiting on me. So I built an app to fix that. This is how it went.</p>
 

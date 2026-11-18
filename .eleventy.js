@@ -24,7 +24,15 @@ eleventyConfig.setLibrary("md", md);
   eleventyConfig.addFilter("date", (value, format) => {
     const d = new Date(value);
     if (format === "YYYY-MM-DD") return d.toISOString().slice(0, 10);
+    if (format === "short") return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
     return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  });
+
+  // "About 4 minutes" from a rendered post
+  eleventyConfig.addFilter("readingTime", (html) => {
+    const words = String(html).replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+    const mins = Math.max(1, Math.round(words / 230));
+    return `about ${mins} minute${mins === 1 ? "" : "s"}`;
   });
 
   // Posts collection
