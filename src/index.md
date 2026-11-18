@@ -7,7 +7,7 @@ templateEngineOverride: njk
 
 <section class="hero">
   <h1>Notes about stuff I'm doing</h1>
-  <p>Mostly data: SQL, Python and analytics engineering. Sometimes travel, and the odd thing I've built.</p>
+  <p>Mostly data: SQL, Python, and analytics engineering. Sometimes travel, and the odd thing I've built.</p>
 </section>
 
 <section id="writing" aria-labelledby="writing-label">
@@ -33,7 +33,7 @@ templateEngineOverride: njk
   <div class="made-grid">
     <a href="https://photos.bradleycorrigan.co.uk"><strong>Photos</strong><span>My photography portfolio</span></a>
     <a href="/embeds/restaurants/"><strong>Restaurant list</strong><span>Places I like to eat</span></a>
-    <a href="/embeds/python-visualiser-vibe-coded/"><strong>Python visualiser</strong><span>Vibe coded with Claude</span></a>
+    <a href="/python-visualiser/"><strong>Python visualiser</strong><span>Step through Python one line at a time</span></a>
     <a href="/embeds/meatball/"><strong>Meatball</strong><span>A cat</span></a>
   </div>
 </section>

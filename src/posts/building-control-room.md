@@ -6,10 +6,10 @@ tags: projects
 
 <p class="lede">In September I had a handful of Claude Code agents running in a handful of terminal tabs, and no idea which of them was waiting on me. So I built an app to fix that. This is how it went.</p>
 
-Control Room is a Mac app for running lots of coding agents at once. It shows every agent I have going, flags the ones that need an answer, and lets me reply, review the diff and open a pull request without leaving the window. It's open source on [GitHub](https://github.com/bradleycorrigan/control-room).
+Control Room is a Mac app for running lots of coding agents at once. It shows every agent I have going, flags the ones that need an answer, and lets me reply, review the diff, and open a pull request without leaving the window. It's open source on [GitHub](https://github.com/bradleycorrigan/control-room).
 
 <figure class="shot">
-  <img src="/images/control-room/answering-an-agent.jpg" width="1600" height="914" alt="Control Room in the Kanagawa theme, showing a session where Claude asks a multiple-choice question and wants permission to run a git command, with Allow, Always allow and Deny buttons.">
+  <img src="/images/control-room/answering-an-agent.jpg" width="1600" height="914" alt="Control Room in the Kanagawa theme, showing a session where Claude asks a multiple-choice question and wants permission to run a git command, with Allow, Always allow, and Deny buttons.">
   <figcaption>Answering an agent without going near its terminal. This is the bit I wanted most. (Kanagawa theme.)</figcaption>
 </figure>
 
@@ -33,7 +33,7 @@ Control Room doesn't run the agents itself. It starts them in tmux, then watches
 
 <figure class="shot">
   <img src="/images/control-room/home.jpg" width="1600" height="914" loading="lazy" alt="The Home screen: a prompt box asking 'What should the agent do?' above a grid of recent sessions with status labels.">
-  <figcaption>Home. Type what you want, pick a project, and a new worktree, branch and tmux window appear behind it.</figcaption>
+  <figcaption>Home. Type what you want, pick a project, and a new worktree, branch, and tmux window appear behind it.</figcaption>
 </figure>
 
 ## Knowing what each agent is doing 👀
@@ -89,7 +89,7 @@ env CR_HOOK_URL='http://host.docker.internal:47821/hook/container/<session>?toke
     <figcaption>The agent's commands and edits fold into one line, so the conversation stays readable.</figcaption>
   </figure>
   <figure class="shot">
-    <img src="/images/control-room/tickets.jpg" width="1600" height="914" loading="lazy" alt="The Tickets screen in Tokyo Night: Jira tickets grouped by status with epic, cycle and estimate on each row.">
+    <img src="/images/control-room/tickets.jpg" width="1600" height="914" loading="lazy" alt="The Tickets screen in Tokyo Night: Jira tickets grouped by status with epic, cycle, and estimate on each row.">
     <figcaption>Jira tickets live in the same app, so I can start a session straight from one.</figcaption>
   </figure>
 </div>
@@ -106,7 +106,7 @@ env CR_HOOK_URL='http://host.docker.internal:47821/hook/container/<session>?toke
 | Jira Cloud API | The Tickets screen. The token sits encrypted in the Mac's Keychain. |
 | Claude Haiku | Suggests a short name for each new session. |
 
-There's no server, no account and no sign-in. Everything runs on the Mac and talks to tools that are already installed.
+There's no server, no account, and no sign-in. Everything runs on the Mac and talks to tools that are already installed.
 
 ## Bugs that each cost me a day 🪤
 
@@ -129,7 +129,7 @@ The best lessons came from bugs that only showed up in the real world. I keep th
 
 ## The themes 🎨
 
-I wanted it to look like something I'd choose to keep open all day, so I held it to the standard of [Linear](https://linear.app): calm, dense and keyboard-first. It has 19 themes, all ported from editor themes people already love. Click through a few:
+I wanted it to look like something I'd choose to keep open all day, so I held it to the standard of [Linear](https://linear.app): calm, dense, and keyboard-first. It has 19 themes, all ported from editor themes people already love. Click through a few:
 
 <div class="theme-gallery">
   <div class="theme-picker" role="group" aria-label="Choose a theme">
@@ -173,7 +173,7 @@ A few rules keep 19 themes from turning into 19 sets of bugs:
 
 - **Every colour is a token.** A hex code typed straight into a component fails the build.
 - **Contrast is checked in every theme, on every build.** Body text needs 4.5:1, muted text and status dots 3:1. If a theme fails, the theme gets fixed. The rule never gets waived.
-- **One component per idea.** The list and the grid share the same heading, filter menu and chips, so they can't drift apart.
+- **One component per idea.** The list and the grid share the same heading, filter menu, and chips, so they can't drift apart.
 - **No AI tells.** No emoji in the app, no icon on every row, no identical big button repeated down a list.
 
 ## Building it with agents 🤖
@@ -187,7 +187,7 @@ One command, `npm run gate`, prints PASS or FAIL. It type-checks, lints, builds,
 A few things I learnt the hard way:
 
 - **Gate runs aren't free.** One day went on about 30 of them. Now the rule is: before re-running, ask what the run will tell you that you don't already know.
-- **Make failures explain themselves.** Every failed check prints a snapshot of what was on screen: open dialogs, focus, toasts. That usually answers the question without another run.
+- **Make failures explain themselves.** Every failed check prints a snapshot of what was on screen: open dialogs, focus, and toasts. That usually answers the question without another run.
 - **Small fixtures, then real volume.** The fake project is tiny so checks can count exactly. Some checks add 60 realistic tickets, look at the layout, then take them away, after two layout bugs shipped that only showed up with real numbers.
 - **A sleep that looks pointless often isn't.** Swapping 42 fixed waits for "wait until" checks at once made every run fail somewhere different.
 
@@ -199,13 +199,13 @@ A few things I learnt the hard way:
 - **GitHub.** Pull request lookups are shared and cached, instead of each card asking on its own.
 
 <figure class="shot">
-  <img src="/images/control-room/artifacts.jpg" width="1600" height="914" loading="lazy" alt="The Artifacts screen with one published page open in a preview, with buttons to open it, start a session about it, add it to a ticket or copy its link.">
+  <img src="/images/control-room/artifacts.jpg" width="1600" height="914" loading="lazy" alt="The Artifacts screen with one published page open in a preview, with buttons to open it, start a session about it, add it to a ticket, or copy its link.">
   <figcaption>The newest screen: every page my agents have published, pieced together from session history, because there's no API for the list.</figcaption>
 </figure>
 
 ## What I'd tell myself at the start 📝
 
-- **Lean on tools that already exist.** tmux, git worktrees and the GitHub CLI do the heavy lifting. My code mostly watches and connects them.
+- **Lean on tools that already exist.** tmux, git worktrees, and the GitHub CLI do the heavy lifting. My code mostly watches and connects them.
 - **Plan for the parts you don't control.** Claude Code's session files aren't a public API. All the parsing lives in one file, and a session it can't read shows as "unknown" instead of breaking the list.
 - **A button only exists if it works.** No greyed-out features and no "coming soon". If it isn't built, it isn't on screen.
 - **Invest in testing before you need it.** With agents writing most of the code, the gate is what lets me trust a change I didn't type.

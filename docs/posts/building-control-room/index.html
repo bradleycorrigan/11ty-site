@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/style.css?v=1795009279096">
+    <link rel="stylesheet" href="/style.css?v=1795009544756">
     <script type="module">
         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
 
@@ -92,9 +92,9 @@
             </header>
             <div class="post-body">
                 <p class="lede">In September I had a handful of Claude Code agents running in a handful of terminal tabs, and no idea which of them was waiting on me. So I built an app to fix that. This is how it went.</p>
-<p>Control Room is a Mac app for running lots of coding agents at once. It shows every agent I have going, flags the ones that need an answer, and lets me reply, review the diff and open a pull request without leaving the window. It's open source on <a href="https://github.com/bradleycorrigan/control-room">GitHub</a>.</p>
+<p>Control Room is a Mac app for running lots of coding agents at once. It shows every agent I have going, flags the ones that need an answer, and lets me reply, review the diff, and open a pull request without leaving the window. It's open source on <a href="https://github.com/bradleycorrigan/control-room">GitHub</a>.</p>
 <figure class="shot">
-  <img src="/images/control-room/answering-an-agent.jpg" width="1600" height="914" alt="Control Room in the Kanagawa theme, showing a session where Claude asks a multiple-choice question and wants permission to run a git command, with Allow, Always allow and Deny buttons.">
+  <img src="/images/control-room/answering-an-agent.jpg" width="1600" height="914" alt="Control Room in the Kanagawa theme, showing a session where Claude asks a multiple-choice question and wants permission to run a git command, with Allow, Always allow, and Deny buttons.">
   <figcaption>Answering an agent without going near its terminal. This is the bit I wanted most. (Kanagawa theme.)</figcaption>
 </figure>
 <h2>The problem 🤯</h2>
@@ -111,7 +111,7 @@
 <p>Control Room doesn't run the agents itself. It starts them in tmux, then watches. That kept the app simple, and it means a crash in my code never kills an hour of an agent's work.</p>
 <figure class="shot">
   <img src="/images/control-room/home.jpg" width="1600" height="914" loading="lazy" alt="The Home screen: a prompt box asking 'What should the agent do?' above a grid of recent sessions with status labels.">
-  <figcaption>Home. Type what you want, pick a project, and a new worktree, branch and tmux window appear behind it.</figcaption>
+  <figcaption>Home. Type what you want, pick a project, and a new worktree, branch, and tmux window appear behind it.</figcaption>
 </figure>
 <h2>Knowing what each agent is doing 👀</h2>
 <p>This was the hardest part. Claude Code doesn't offer an official &quot;what are you doing?&quot; API. It does write a small file per running session in <code>~/.claude/sessions/</code>, and it supports <strong>hooks</strong>: commands or web requests it fires on events like &quot;finished a turn&quot; or &quot;needs permission&quot;.</p>
@@ -156,7 +156,7 @@
     <figcaption>The agent's commands and edits fold into one line, so the conversation stays readable.</figcaption>
   </figure>
   <figure class="shot">
-    <img src="/images/control-room/tickets.jpg" width="1600" height="914" loading="lazy" alt="The Tickets screen in Tokyo Night: Jira tickets grouped by status with epic, cycle and estimate on each row.">
+    <img src="/images/control-room/tickets.jpg" width="1600" height="914" loading="lazy" alt="The Tickets screen in Tokyo Night: Jira tickets grouped by status with epic, cycle, and estimate on each row.">
     <figcaption>Jira tickets live in the same app, so I can start a session straight from one.</figcaption>
   </figure>
 </div>
@@ -199,7 +199,7 @@
 </tr>
 </tbody>
 </table>
-<p>There's no server, no account and no sign-in. Everything runs on the Mac and talks to tools that are already installed.</p>
+<p>There's no server, no account, and no sign-in. Everything runs on the Mac and talks to tools that are already installed.</p>
 <h2>Bugs that each cost me a day 🪤</h2>
 <p>The best lessons came from bugs that only showed up in the real world. I keep these in the repo's <code>CLAUDE.md</code> so no agent makes them twice.</p>
 <div class="trap">
@@ -215,7 +215,7 @@
   <p>tmux gives you the process ID of the pane's shell, and Claude runs as a child of that shell. Matching on it pointed at the wrong thing. The session file holds the tmux window name, so I join on that instead.</p>
 </div>
 <h2>The themes 🎨</h2>
-<p>I wanted it to look like something I'd choose to keep open all day, so I held it to the standard of <a href="https://linear.app">Linear</a>: calm, dense and keyboard-first. It has 19 themes, all ported from editor themes people already love. Click through a few:</p>
+<p>I wanted it to look like something I'd choose to keep open all day, so I held it to the standard of <a href="https://linear.app">Linear</a>: calm, dense, and keyboard-first. It has 19 themes, all ported from editor themes people already love. Click through a few:</p>
 <div class="theme-gallery">
   <div class="theme-picker" role="group" aria-label="Choose a theme">
     <button type="button" data-shot="rose-pine" aria-pressed="true">Rosé Pine</button>
@@ -256,7 +256,7 @@ document.querySelectorAll('.theme-gallery').forEach(function (g) {
 <ul>
 <li><strong>Every colour is a token.</strong> A hex code typed straight into a component fails the build.</li>
 <li><strong>Contrast is checked in every theme, on every build.</strong> Body text needs 4.5:1, muted text and status dots 3:1. If a theme fails, the theme gets fixed. The rule never gets waived.</li>
-<li><strong>One component per idea.</strong> The list and the grid share the same heading, filter menu and chips, so they can't drift apart.</li>
+<li><strong>One component per idea.</strong> The list and the grid share the same heading, filter menu, and chips, so they can't drift apart.</li>
 <li><strong>No AI tells.</strong> No emoji in the app, no icon on every row, no identical big button repeated down a list.</li>
 </ul>
 <h2>Building it with agents 🤖</h2>
@@ -268,7 +268,7 @@ document.querySelectorAll('.theme-gallery').forEach(function (g) {
 <p>A few things I learnt the hard way:</p>
 <ul>
 <li><strong>Gate runs aren't free.</strong> One day went on about 30 of them. Now the rule is: before re-running, ask what the run will tell you that you don't already know.</li>
-<li><strong>Make failures explain themselves.</strong> Every failed check prints a snapshot of what was on screen: open dialogs, focus, toasts. That usually answers the question without another run.</li>
+<li><strong>Make failures explain themselves.</strong> Every failed check prints a snapshot of what was on screen: open dialogs, focus, and toasts. That usually answers the question without another run.</li>
 <li><strong>Small fixtures, then real volume.</strong> The fake project is tiny so checks can count exactly. Some checks add 60 realistic tickets, look at the layout, then take them away, after two layout bugs shipped that only showed up with real numbers.</li>
 <li><strong>A sleep that looks pointless often isn't.</strong> Swapping 42 fixed waits for &quot;wait until&quot; checks at once made every run fail somewhere different.</li>
 </ul>
@@ -280,12 +280,12 @@ document.querySelectorAll('.theme-gallery').forEach(function (g) {
 <li><strong>GitHub.</strong> Pull request lookups are shared and cached, instead of each card asking on its own.</li>
 </ul>
 <figure class="shot">
-  <img src="/images/control-room/artifacts.jpg" width="1600" height="914" loading="lazy" alt="The Artifacts screen with one published page open in a preview, with buttons to open it, start a session about it, add it to a ticket or copy its link.">
+  <img src="/images/control-room/artifacts.jpg" width="1600" height="914" loading="lazy" alt="The Artifacts screen with one published page open in a preview, with buttons to open it, start a session about it, add it to a ticket, or copy its link.">
   <figcaption>The newest screen: every page my agents have published, pieced together from session history, because there's no API for the list.</figcaption>
 </figure>
 <h2>What I'd tell myself at the start 📝</h2>
 <ul>
-<li><strong>Lean on tools that already exist.</strong> tmux, git worktrees and the GitHub CLI do the heavy lifting. My code mostly watches and connects them.</li>
+<li><strong>Lean on tools that already exist.</strong> tmux, git worktrees, and the GitHub CLI do the heavy lifting. My code mostly watches and connects them.</li>
 <li><strong>Plan for the parts you don't control.</strong> Claude Code's session files aren't a public API. All the parsing lives in one file, and a session it can't read shows as &quot;unknown&quot; instead of breaking the list.</li>
 <li><strong>A button only exists if it works.</strong> No greyed-out features and no &quot;coming soon&quot;. If it isn't built, it isn't on screen.</li>
 <li><strong>Invest in testing before you need it.</strong> With agents writing most of the code, the gate is what lets me trust a change I didn't type.</li>
@@ -301,6 +301,6 @@ document.querySelectorAll('.theme-gallery').forEach(function (g) {
 
     <footer class="site-footer wrap">Built with Eleventy. Hosted on GitHub Pages.</footer>
 
-    <script src="/script.js?v=1795009279096"></script>
+    <script src="/script.js?v=1795009544756"></script>
 </body>
 </html>

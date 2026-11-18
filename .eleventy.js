@@ -82,6 +82,7 @@ eleventyConfig.setLibrary("md", md);
   eleventyConfig.addPassthroughCopy("src/images");
   eleventyConfig.addPassthroughCopy("src/style.css");
   eleventyConfig.addPassthroughCopy("src/script.js");
+  eleventyConfig.addPassthroughCopy("src/visualiser.js");
 
 
   return {

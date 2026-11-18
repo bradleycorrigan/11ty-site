@@ -1,0 +1,69 @@
+---
+title: Python visualiser
+layout: base.njk
+hideTitle: true
+wide: true
+permalink: /python-visualiser/
+---
+
+<section class="viz" aria-labelledby="viz-title">
+  <header class="viz-head">
+    <h1 id="viz-title">Python visualiser</h1>
+    <p>Write or paste some Python, then step through it one line at a time. You'll see which line runs, what each variable holds, and anything it prints.</p>
+  </header>
+
+  <div class="viz-grid">
+    <div class="viz-panel">
+      <div class="panel-bar">
+        <label for="examples">Example</label>
+        <select id="examples"></select>
+        <span class="viz-status" id="status" role="status">Getting Python ready…</span>
+      </div>
+
+      <div class="editor" id="editor">
+        <pre class="gutter" id="gutter" aria-hidden="true">1</pre>
+        <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Your Python code"></textarea>
+      </div>
+
+      <ol class="code-view" id="codeView" hidden></ol>
+
+      <div class="panel-actions">
+        <button type="button" class="btn btn-primary" id="run" disabled>Run it step by step</button>
+        <button type="button" class="btn" id="edit" hidden>Edit code</button>
+      </div>
+    </div>
+
+    <div class="viz-panel" aria-live="polite">
+      <div class="viz-empty" id="empty">
+        <h2>Nothing to show yet</h2>
+        <p>Pick an example or write your own code, then press <strong>Run it step by step</strong>.</p>
+      </div>
+
+      <div id="stepper" hidden>
+        <p class="step-count" id="stepCount"></p>
+        <p class="step-text" id="stepText"></p>
+        <ul class="step-details" id="stepDetails"></ul>
+
+        <div class="controls">
+          <button type="button" class="btn" id="back">← Back</button>
+          <button type="button" class="btn btn-primary" id="next">Next →</button>
+          <button type="button" class="btn" id="play">Play</button>
+        </div>
+        <label class="scrub">
+          <span class="visually-hidden">Jump to step</span>
+          <input type="range" id="scrub" min="0" max="0" value="0">
+        </label>
+        <p class="hint">Tip: use the ← and → keys to move between steps.</p>
+
+        <h3 class="viz-label">Variables</h3>
+        <div id="vars"></div>
+
+        <h3 class="viz-label">Printed output</h3>
+        <pre class="viz-output" id="output"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script src="/visualiser.js?v={{ buildTime }}"></script>

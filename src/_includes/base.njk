@@ -61,7 +61,7 @@
 </head>
 <body class="light-theme">
     <header class="site-header">
-        <div class="wrap">
+        <div class="wrap{% if wide %} wrap-wide{% endif %}">
             <a class="site-name" href="/">Bradley Corrigan</a>
             <nav class="site-nav" aria-label="Site">
                 <a href="/#writing">Writing</a>
@@ -76,7 +76,7 @@
         </div>
     </header>
 
-    <main class="wrap">
+    <main class="wrap{% if wide %} wrap-wide{% endif %}">
     {% if "/posts/" in page.url %}
         <article>
             <header class="post-header">
@@ -103,7 +103,7 @@
     {% endif %}
     </main>
 
-    <footer class="site-footer wrap">Built with Eleventy. Hosted on GitHub Pages.</footer>
+    <footer class="site-footer wrap{% if wide %} wrap-wide{% endif %}">Built with Eleventy. Hosted on GitHub Pages.</footer>
 
     <script src="/script.js?v={{ buildTime }}"></script>
 </body>
