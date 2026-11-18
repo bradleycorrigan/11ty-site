@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Control Room 🎛️</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+                    <li><a href="/posts/map-functions/">Map Functions</a></li>
+                
+                    <li><a href="/posts/pyplot/">pyplot</a></li>
+                
+                    <li><a href="/posts/caesar-cipher/">Caesar Cipher</a></li>
+                
+                    <li><a href="/posts/building-control-room/">Building Control Room 🎛️</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Building Control Room 🎛️</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+            <div class="post-tags">
+                <strong>Tags:</strong>
+                
+                    
+                
+                    
+                        <a href="/tags/typescript/" class="tag">#typescript</a>
+                    
+                
+                    
+                        <a href="/tags/electron/" class="tag">#electron</a>
+                    
+                
+                    
+                        <a href="/tags/claude-code/" class="tag">#claude-code</a>
+                    
+                
+                    
+                        <a href="/tags/side-project/" class="tag">#side-project</a>
+                    
+                
+            </div>
+        
+
+        <main>
+            <p class="byline">18 Nov 2026 · about 8 minutes</p>
+<p class="lede">In September I had a handful of Claude Code agents running in a handful of terminal tabs, and no idea which of them was waiting on me. So I built an app to fix that. This is how it went.</p>
+<p>Control Room is a Mac app for running lots of coding agents at once. It shows every agent I have going, flags the ones that need an answer, and lets me reply, review the diff and open a pull request without leaving the window. It's open source on <a href="https://github.com/bradleycorrigan/control-room">GitHub</a>.</p>
+<figure class="shot">
+  <img src="/images/control-room/answering-an-agent.jpg" width="1600" height="914" alt="Control Room in the Kanagawa theme, showing a session where Claude asks a multiple-choice question and wants permission to run a git command, with Allow, Always allow and Deny buttons.">
+  <figcaption>Answering an agent without going near its terminal. This is the bit I wanted most. (Kanagawa theme.)</figcaption>
+</figure>
+<h2>The problem 🤯</h2>
+<p>Coding agents are good enough now that the slow part of my day wasn't the work. It was me. I'd start an agent, switch tabs to start another, and come back half an hour later to find the first one had been sat on a yes/no question the whole time.</p>
+<p>Running several at once also meant they kept treading on each other in the same folder. One would switch branch while another was halfway through an edit.</p>
+<p>I wanted three questions answered at a glance: which agents need me, what has each one changed, and is it ready to ship?</p>
+<h2>The idea: one session = worktree + branch + tmux window 💡</h2>
+<p>The design came down to one decision. Every <strong>session</strong> gets three things of its own:</p>
+<ol>
+<li>A git <strong>worktree</strong>, which is a second copy of the repo checked out in its own folder, so agents can't collide.</li>
+<li>A <strong>branch</strong>, so each piece of work ends up as its own pull request.</li>
+<li>A <strong>tmux window</strong>, so the agent keeps running even if I quit the app, and I can always attach to it from a normal terminal.</li>
+</ol>
+<p>Control Room doesn't run the agents itself. It starts them in tmux, then watches. That kept the app simple, and it means a crash in my code never kills an hour of an agent's work.</p>
+<figure class="shot">
+  <img src="/images/control-room/home.jpg" width="1600" height="914" loading="lazy" alt="The Home screen: a prompt box asking 'What should the agent do?' above a grid of recent sessions with status labels.">
+  <figcaption>Home. Type what you want, pick a project, and a new worktree, branch and tmux window appear behind it.</figcaption>
+</figure>
+<h2>Knowing what each agent is doing 👀</h2>
+<p>This was the hardest part. Claude Code doesn't offer an official &quot;what are you doing?&quot; API. It does write a small file per running session in <code>~/.claude/sessions/</code>, and it supports <strong>hooks</strong>: commands or web requests it fires on events like &quot;finished a turn&quot; or &quot;needs permission&quot;.</p>
+<p>So status comes from two places:</p>
+<ul>
+<li><strong>Hooks, when installed.</strong> Claude Code posts each event to a tiny server the app runs on <code>127.0.0.1</code>. Status updates the moment something happens.</li>
+<li><strong>The session files, always.</strong> The app watches them, and checks again every 30 seconds. Without hooks you lose &quot;done&quot; and &quot;errored&quot;, but everything else still works.</li>
+</ul>
+<pre class="language-mermaid"><code class="language-mermaid"><span class="token keyword">flowchart</span> LR
+  you<span class="token text string">(["You"])</span>
+  <span class="token keyword">subgraph</span> app<span class="token text string">["Control Room"]</span>
+    ui<span class="token text string">["Interface&lt;br/>(no access to the Mac)"]</span>
+    main<span class="token text string">["Main process&lt;br/>(runs every command)"]</span>
+    hook<span class="token text string">["Local hook server&lt;br/>127.0.0.1:47821"]</span>
+    watch<span class="token text string">["File watcher&lt;br/>+ 30s check"]</span>
+  <span class="token keyword">end</span>
+  <span class="token keyword">subgraph</span> mac<span class="token text string">["Your Mac"]</span>
+    tmux<span class="token text string">["tmux&lt;br/>one window per session"]</span>
+    agent<span class="token text string">["Claude Code agent"]</span>
+    wt<span class="token text string">["git worktree&lt;br/>+ branch"]</span>
+    files<span class="token text string">["~/.claude/sessions/"]</span>
+  <span class="token keyword">end</span>
+  ext<span class="token text string">["GitHub CLI · Jira · your editor"]</span>
+  you <span class="token arrow operator">--></span> ui
+  ui <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"asks over IPC"</span> <span class="token arrow operator">--></span></span> main
+  main <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"starts"</span> <span class="token arrow operator">--></span></span> tmux
+  tmux <span class="token arrow operator">--></span> agent
+  agent <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"edits"</span> <span class="token arrow operator">--></span></span> wt
+  agent <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"hook events"</span> <span class="token arrow operator">--></span></span> hook
+  agent <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"writes"</span> <span class="token arrow operator">--></span></span> files
+  files <span class="token arrow operator">--></span> watch
+  hook <span class="token arrow operator">--></span> main
+  watch <span class="token arrow operator">--></span> main
+  main <span class="token inter-arrow-label"><span class="token arrow-head arrow operator">--</span> <span class="token label property">"status"</span> <span class="token arrow operator">--></span></span> ui
+  main <span class="token arrow operator">--></span> ext</code></pre>
+<p class="caption">How a session runs. The app starts the agent in tmux, then listens: hooks for instant updates, the session files as a fallback.</p>
+<p>Agents inside a dev container were trickier, because <code>127.0.0.1</code> inside a container is the container, not my Mac. The fix was to start them with an address that points back out, plus a secret token so nothing else can post fake events:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">env</span> <span class="token assign-left variable">CR_HOOK_URL</span><span class="token operator">=</span><span class="token string">'http://host.docker.internal:47821/hook/container/&lt;session>?token=&lt;token>'</span> claude …</code></pre>
+<div class="shot-pair">
+  <figure class="shot">
+    <img src="/images/control-room/chat-view.jpg" width="1600" height="1000" loading="lazy" alt="A session's chat view in a light theme, with the agent's commands and file edits folded into a single summary line.">
+    <figcaption>The agent's commands and edits fold into one line, so the conversation stays readable.</figcaption>
+  </figure>
+  <figure class="shot">
+    <img src="/images/control-room/tickets.jpg" width="1600" height="914" loading="lazy" alt="The Tickets screen in Tokyo Night: Jira tickets grouped by status with epic, cycle and estimate on each row.">
+    <figcaption>Jira tickets live in the same app, so I can start a session straight from one.</figcaption>
+  </figure>
+</div>
+<h2>The stack 🧱</h2>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Electron + React + TypeScript</td>
+<td>A real desktop app with notifications and a Dock icon, written in the language I'm fastest in. Built with electron-vite.</td>
+</tr>
+<tr>
+<td>tmux</td>
+<td>Keeps agents alive outside the app. Every tmux call goes through one function.</td>
+</tr>
+<tr>
+<td>xterm.js + node-pty</td>
+<td>A proper terminal inside the app, drawn with WebGL. node-pty is the only native module allowed.</td>
+</tr>
+<tr>
+<td>git worktrees</td>
+<td>One folder per session, cleaned up when its branch merges.</td>
+</tr>
+<tr>
+<td>GitHub CLI</td>
+<td>Pull request status and the Ship button.</td>
+</tr>
+<tr>
+<td>Jira Cloud API</td>
+<td>The Tickets screen. The token sits encrypted in the Mac's Keychain.</td>
+</tr>
+<tr>
+<td>Claude Haiku</td>
+<td>Suggests a short name for each new session.</td>
+</tr>
+</tbody>
+</table>
+<p>There's no server, no account and no sign-in. Everything runs on the Mac and talks to tools that are already installed.</p>
+<h2>Bugs that each cost me a day 🪤</h2>
+<p>The best lessons came from bugs that only showed up in the real world. I keep these in the repo's <code>CLAUDE.md</code> so no agent makes them twice.</p>
+<div class="trap">
+  <h3>tmux quietly rewrites control characters</h3>
+  <p>Opened from the Dock, the app has no language setting. tmux then decides the terminal can't handle special characters and swaps them all for <code>_</code>. That broke the separator I used to split its output, so every new session failed to start, but only in the installed app and never in development. The fix: pass <code>-u</code> and set a UTF-8 locale on every tmux call.</p>
+</div>
+<div class="trap">
+  <h3>Two timestamps that never match</h3>
+  <p>Claude Code writes a process start time in UTC, month first. <code>ps</code> prints the same moment day first, in local time. Same instant, different text, so they never compared equal. Now I only compare raw milliseconds.</p>
+</div>
+<div class="trap">
+  <h3>The pane's process isn't Claude</h3>
+  <p>tmux gives you the process ID of the pane's shell, and Claude runs as a child of that shell. Matching on it pointed at the wrong thing. The session file holds the tmux window name, so I join on that instead.</p>
+</div>
+<h2>The themes 🎨</h2>
+<p>I wanted it to look like something I'd choose to keep open all day, so I held it to the standard of <a href="https://linear.app">Linear</a>: calm, dense and keyboard-first. It has 19 themes, all ported from editor themes people already love. Click through a few:</p>
+<div class="theme-gallery">
+  <div class="theme-picker" role="group" aria-label="Choose a theme">
+    <button type="button" data-shot="rose-pine" aria-pressed="true">Rosé Pine</button>
+    <button type="button" data-shot="catppuccin-mocha" aria-pressed="false">Catppuccin Mocha</button>
+    <button type="button" data-shot="kanagawa" aria-pressed="false">Kanagawa</button>
+    <button type="button" data-shot="everforest-dark" aria-pressed="false">Everforest</button>
+    <button type="button" data-shot="nord" aria-pressed="false">Nord</button>
+    <button type="button" data-shot="gruvbox-dark" aria-pressed="false">Gruvbox</button>
+    <button type="button" data-shot="rose-pine-dawn" aria-pressed="false">Rosé Pine Dawn</button>
+    <button type="button" data-shot="catppuccin-latte" aria-pressed="false">Catppuccin Latte</button>
+  </div>
+  <figure class="shot">
+    <img data-shot="rose-pine" src="/images/control-room/theme-rose-pine.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Rosé Pine theme.">
+    <img data-shot="catppuccin-mocha" src="/images/control-room/theme-catppuccin-mocha.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Catppuccin Mocha theme." hidden>
+    <img data-shot="kanagawa" src="/images/control-room/theme-kanagawa.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Kanagawa theme." hidden>
+    <img data-shot="everforest-dark" src="/images/control-room/theme-everforest-dark.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Everforest Dark theme." hidden>
+    <img data-shot="nord" src="/images/control-room/theme-nord.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Nord theme." hidden>
+    <img data-shot="gruvbox-dark" src="/images/control-room/theme-gruvbox-dark.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Gruvbox Dark theme." hidden>
+    <img data-shot="rose-pine-dawn" src="/images/control-room/theme-rose-pine-dawn.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Rosé Pine Dawn theme." hidden>
+    <img data-shot="catppuccin-latte" src="/images/control-room/theme-catppuccin-latte.jpg" width="1600" height="914" loading="lazy" alt="The Sessions grid in the Catppuccin Latte theme." hidden>
+    <figcaption>The same Sessions screen in eight of the 19 themes. Status is always a colour and a word, so it still reads if you can't tell the colours apart.</figcaption>
+  </figure>
+</div>
+<script>
+document.querySelectorAll('.theme-gallery').forEach(function (g) {
+  var buttons = g.querySelectorAll('.theme-picker button');
+  var shots = g.querySelectorAll('img[data-shot]');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-shot');
+      buttons.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      shots.forEach(function (img) { img.hidden = img.getAttribute('data-shot') !== id; });
+    });
+  });
+});
+</script>
+<p>A few rules keep 19 themes from turning into 19 sets of bugs:</p>
+<ul>
+<li><strong>Every colour is a token.</strong> A hex code typed straight into a component fails the build.</li>
+<li><strong>Contrast is checked in every theme, on every build.</strong> Body text needs 4.5:1, muted text and status dots 3:1. If a theme fails, the theme gets fixed. The rule never gets waived.</li>
+<li><strong>One component per idea.</strong> The list and the grid share the same heading, filter menu and chips, so they can't drift apart.</li>
+<li><strong>No AI tells.</strong> No emoji in the app, no icon on every row, no identical big button repeated down a list.</li>
+</ul>
+<h2>Building it with agents 🤖</h2>
+<p>Most of the code was written by Claude Code agents, with me writing the plans and reviewing the work. That made the testing setup the most important thing I built.</p>
+<p>One command, <code>npm run gate</code>, prints PASS or FAIL. It type-checks, lints, builds, runs the contrast check, and then drives the real app with real clicks and key presses against a fake project full of seeded sessions and live tmux panes. Nothing reaches <code>main</code> until it passes.</p>
+<blockquote>
+<p>A check runs against the real app, or it's reported as unrunnable. Agents love to &quot;verify&quot; a component by rendering it on its own. Those results were worthless in both directions.</p>
+</blockquote>
+<p>A few things I learnt the hard way:</p>
+<ul>
+<li><strong>Gate runs aren't free.</strong> One day went on about 30 of them. Now the rule is: before re-running, ask what the run will tell you that you don't already know.</li>
+<li><strong>Make failures explain themselves.</strong> Every failed check prints a snapshot of what was on screen: open dialogs, focus, toasts. That usually answers the question without another run.</li>
+<li><strong>Small fixtures, then real volume.</strong> The fake project is tiny so checks can count exactly. Some checks add 60 realistic tickets, look at the layout, then take them away, after two layout bugs shipped that only showed up with real numbers.</li>
+<li><strong>A sleep that looks pointless often isn't.</strong> Swapping 42 fixed waits for &quot;wait until&quot; checks at once made every run fail somewhere different.</li>
+</ul>
+<h2>Making it fast ⚡</h2>
+<ul>
+<li><strong>Faster tests.</strong> The page checks took about 140 seconds. Splitting them across four app windows running side by side brought that down to about 60. The whole gate now runs in under two minutes.</li>
+<li><strong>Chat.</strong> Messages are drawn once and skipped while off screen. Transcripts are read from where the app left off, not from the top each time.</li>
+<li><strong>Jira.</strong> The board shows last time's tickets straight away, then refreshes behind them.</li>
+<li><strong>GitHub.</strong> Pull request lookups are shared and cached, instead of each card asking on its own.</li>
+</ul>
+<figure class="shot">
+  <img src="/images/control-room/artifacts.jpg" width="1600" height="914" loading="lazy" alt="The Artifacts screen with one published page open in a preview, with buttons to open it, start a session about it, add it to a ticket or copy its link.">
+  <figcaption>The newest screen: every page my agents have published, pieced together from session history, because there's no API for the list.</figcaption>
+</figure>
+<h2>What I'd tell myself at the start 📝</h2>
+<ul>
+<li><strong>Lean on tools that already exist.</strong> tmux, git worktrees and the GitHub CLI do the heavy lifting. My code mostly watches and connects them.</li>
+<li><strong>Plan for the parts you don't control.</strong> Claude Code's session files aren't a public API. All the parsing lives in one file, and a session it can't read shows as &quot;unknown&quot; instead of breaking the list.</li>
+<li><strong>A button only exists if it works.</strong> No greyed-out features and no &quot;coming soon&quot;. If it isn't built, it isn't on screen.</li>
+<li><strong>Invest in testing before you need it.</strong> With agents writing most of the code, the gate is what lets me trust a change I didn't type.</li>
+</ul>
+<hr>
+<p class="signoff">462 commits over two months, about 61,000 lines of TypeScript. Mac only, MIT licence. The code is on <a href="https://github.com/bradleycorrigan/control-room">GitHub</a>. Every screenshot here uses the app's built-in example data.</p>
+
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>

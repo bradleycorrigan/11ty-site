@@ -17,6 +17,13 @@ module.exports = function(eleventyConfig) {
 eleventyConfig.setLibrary("md", md);
 
 
+  // Date filter used by tags.njk ('YYYY-MM-DD' or 'MMMM DD, YYYY')
+  eleventyConfig.addFilter("date", (value, format) => {
+    const d = new Date(value);
+    if (format === "YYYY-MM-DD") return d.toISOString().slice(0, 10);
+    return d.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+  });
+
   // Posts collection
   eleventyConfig.addCollection("posts", function(collectionApi) {
     return collectionApi.getFilteredByGlob("src/posts/**/*.md");

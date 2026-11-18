@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts tagged &#39;typescript&#39;</title>
+    <link rel="stylesheet" href="/style.css">
+    <script type="module">
+        import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+        mermaid.initialize({ startOnLoad: true });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelectorAll("pre code.language-mermaid").forEach(block => {
+                const parent = block.parentNode;
+                const graphDef = block.textContent;
+                const div = document.createElement("div");
+                div.classList.add("mermaid");
+                div.textContent = graphDef;
+                parent.replaceWith(div);
+            });
+            mermaid.init();
+        });
+    </script>
+</head>
+<body class="light-theme"> <!-- Default theme class -->
+    <!-- Sidebar toggle button -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark/light theme">🌓</button>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed">
+        <div class="sidebar-header">
+            📖 Menu
+        </div>
+        <nav>
+            <ul>
+                <!-- Hardcoded link for the homepage -->
+                <li><a href="/">🏡 Home</a></li>
+                <li><a href="https://photos.bradleycorrigan.co.uk">📸 Pictures</a></li>
+                
+                    <li><a href="/posts/week-one-porto/">Week in Porto</a></li>
+                
+                    <li><a href="/posts/week-two-coimbra/">Week in Coimbra</a></li>
+                
+                    <li><a href="/posts/python-loops/">Loops</a></li>
+                
+                    <li><a href="/posts/sql-joins/">SQL Joins</a></li>
+                
+                    <li><a href="/posts/python-list-comprehensions/">List Comprehensions</a></li>
+                
+                    <li><a href="/posts/metric-trees/">Metric Trees</a></li>
+                
+                    <li><a href="/posts/window-functions/">Window Functions</a></li>
+                
+                    <li><a href="/posts/map-functions/">Map Functions</a></li>
+                
+                    <li><a href="/posts/pyplot/">pyplot</a></li>
+                
+                    <li><a href="/posts/caesar-cipher/">Caesar Cipher</a></li>
+                
+                    <li><a href="/posts/building-control-room/">Building Control Room 🎛️</a></li>
+                
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="content collapsed">
+        <header>
+            <h1>Posts tagged &#39;typescript&#39;</h1>
+        </header>
+
+        <!-- Tags section (only shows if tags exist) -->
+        
+
+        <main>
+            
+<p>1 post tagged with "typescript"</p>
+
+<ul class="post-list">
+
+  <li>
+    <article>
+      <h2><a href="/posts/building-control-room/">Building Control Room 🎛️</a></h2>
+      
+        <time datetime="2026-11-18">
+          18 November 2026
+        </time>
+      
+      
+      
+        <div class="tags">
+          
+            
+          
+            
+              <a href="/tags/typescript/" class="tag">#typescript</a>
+            
+          
+            
+              <a href="/tags/electron/" class="tag">#electron</a>
+            
+          
+            
+              <a href="/tags/claude-code/" class="tag">#claude-code</a>
+            
+          
+            
+              <a href="/tags/side-project/" class="tag">#side-project</a>
+            
+          
+        </div>
+      
+    </article>
+  </li>
+
+</ul>
+
+<p><a href="/tags/">← All tags</a></p>
+        </main>
+    </div>
+
+    <script src="/script.js"></script>
+</body>
+</html>
