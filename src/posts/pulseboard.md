@@ -6,20 +6,20 @@ tags: projects
 
 <p class="lede">I pay for a gym membership every month, and I wanted a straight answer to one question: am I actually getting my money's worth? So I built a small app to log every session and tell me.</p>
 
-Pulseboard is a workout tracker made for exactly one person: me. I log a gym session, a swim, or a sauna in a couple of taps, plus the occasional weigh-in, and it shows me how much value I've had from the membership this month and how my weight is trending. It started life in June as a quick weekend project and has been rebuilt twice since, most recently with Claude Code doing most of the typing.
+Pulseboard is a workout tracker made for exactly one person: me. I log a gym session, a swim, or a sauna in a couple of taps, and it shows me how much value I've had from the membership this month, what mix of sessions I'm doing, and how often I actually go. It started life in June as a quick weekend project and has been rebuilt twice since, most recently with Claude Code doing most of the typing.
 
 <div class="phones">
   <figure class="shot">
-    <img src="/images/pulseboard/log-paper.jpg" width="780" height="1328" alt="The Log screen in the Paper theme: this month's workouts, value, and weigh-ins at the top, then a form to log a new workout with buttons for each type of session and its price.">
+    <img src="/images/pulseboard/log-paper.jpg" width="780" height="1328" alt="The Log screen in the Paper theme: this month's workouts and value at the top, then a form to log a new workout with buttons for each type of session and its price.">
   </figure>
   <figure class="shot">
     <img src="/images/pulseboard/value-paper.jpg" width="780" height="922" loading="lazy" alt="The Membership value card: £103.70 of value against a £75 fee, marked as paid off on 6 November, with a chart of this month against last month.">
   </figure>
   <figure class="shot">
-    <img src="/images/pulseboard/weight-paper-night.jpg" width="780" height="1031" loading="lazy" alt="The Weight card in the dark Paper Night theme: a trend line through weekly weigh-ins, the rate per week, and an estimate of when the goal will be reached.">
+    <img src="/images/pulseboard/mix-paper-night.jpg" width="780" height="834" loading="lazy" alt="The Value by month card in the dark Paper Night theme: a stacked bar for each month split into gym, lido, pool, and sauna, with a line at the £75 fee.">
   </figure>
 </div>
-<p class="caption">Logging a session, the membership maths, and the weight trend. Every screenshot here uses made-up demo data.</p>
+<p class="caption">Logging a session, the membership maths, and the mix of sessions each month. Every screenshot here uses made-up demo data.</p>
 
 ## The idea: price every visit 💷
 
@@ -27,14 +27,14 @@ The trick that makes the whole thing work is giving every session a price: what 
 
 That turns "I should go more" into something I can see. The Membership value card shows how much I've had back this month, the day I paid it off, my cost per visit, and whether I'm ahead of or behind last month by the same day.
 
-The second goal is weight. Weigh-ins are noisy day to day, so the app draws a smoothed trend line through them and works out the rate per week from the last four weeks. From that it estimates when I'll hit my goal at the current pace.
+The other cards look at the longer run. Value by month stacks each month's sessions by type, so I can see the mix shift between gym, pool, lido, and sauna, with a line at the fee. Month by month adds visits, cost per visit, and how many days I was active, and a heatmap shows every day of the last few months at a glance.
 
 ## Version one: quick, public, and slow 🐌
 
 The first version was a FastAPI app with a Supabase database, charts drawn with Plotly, and hosting on Vercel's free tier. It did the job, but it had two problems:
 
 - **It was slow to wake up.** Vercel runs apps like this as serverless functions, so after a quiet spell the first visit took about eight seconds. That's a long time to stand at a gym reception holding your phone.
-- **It had no sign-in.** Anyone with the address could see my data, which for health data isn't great.
+- **It had no sign-in.** Anyone with the address could see my data, which for personal data isn't great.
 
 ## Moving it onto my own server 🖥️
 
@@ -105,7 +105,7 @@ A few things made the biggest difference to how it feels:
 
 ## Next: the Oura ring 💍
 
-We've ordered an Oura ring and we're waiting for it to arrive. Once it does, I want Pulseboard to pull in my daily numbers from Oura's official API, so they sit next to my workouts:
+I've ordered an Oura ring and I'm waiting for it to arrive. Once it does, I want Pulseboard to pull in my daily numbers from Oura's official API, so they sit next to my workouts:
 
 - **A Today screen** with my readiness score and a simple suggestion, like "good day to push" or "take it easy".
 - **Sleep, HRV, and resting heart rate**, so I can see how training and recovery line up over time.

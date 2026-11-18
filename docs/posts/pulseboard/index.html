@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Inter+Tight:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/style.css?v=1795010357829">
+    <link rel="stylesheet" href="/style.css?v=1795010738690">
     <script type="module">
         import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
 
@@ -92,28 +92,28 @@
             </header>
             <div class="post-body">
                 <p class="lede">I pay for a gym membership every month, and I wanted a straight answer to one question: am I actually getting my money's worth? So I built a small app to log every session and tell me.</p>
-<p>Pulseboard is a workout tracker made for exactly one person: me. I log a gym session, a swim, or a sauna in a couple of taps, plus the occasional weigh-in, and it shows me how much value I've had from the membership this month and how my weight is trending. It started life in June as a quick weekend project and has been rebuilt twice since, most recently with Claude Code doing most of the typing.</p>
+<p>Pulseboard is a workout tracker made for exactly one person: me. I log a gym session, a swim, or a sauna in a couple of taps, and it shows me how much value I've had from the membership this month, what mix of sessions I'm doing, and how often I actually go. It started life in June as a quick weekend project and has been rebuilt twice since, most recently with Claude Code doing most of the typing.</p>
 <div class="phones">
   <figure class="shot">
-    <img src="/images/pulseboard/log-paper.jpg" width="780" height="1328" alt="The Log screen in the Paper theme: this month's workouts, value, and weigh-ins at the top, then a form to log a new workout with buttons for each type of session and its price.">
+    <img src="/images/pulseboard/log-paper.jpg" width="780" height="1328" alt="The Log screen in the Paper theme: this month's workouts and value at the top, then a form to log a new workout with buttons for each type of session and its price.">
   </figure>
   <figure class="shot">
     <img src="/images/pulseboard/value-paper.jpg" width="780" height="922" loading="lazy" alt="The Membership value card: £103.70 of value against a £75 fee, marked as paid off on 6 November, with a chart of this month against last month.">
   </figure>
   <figure class="shot">
-    <img src="/images/pulseboard/weight-paper-night.jpg" width="780" height="1031" loading="lazy" alt="The Weight card in the dark Paper Night theme: a trend line through weekly weigh-ins, the rate per week, and an estimate of when the goal will be reached.">
+    <img src="/images/pulseboard/mix-paper-night.jpg" width="780" height="834" loading="lazy" alt="The Value by month card in the dark Paper Night theme: a stacked bar for each month split into gym, lido, pool, and sauna, with a line at the £75 fee.">
   </figure>
 </div>
-<p class="caption">Logging a session, the membership maths, and the weight trend. Every screenshot here uses made-up demo data.</p>
+<p class="caption">Logging a session, the membership maths, and the mix of sessions each month. Every screenshot here uses made-up demo data.</p>
 <h2>The idea: price every visit 💷</h2>
 <p>The trick that makes the whole thing work is giving every session a price: what it would have cost me to pay as I go. A gym visit is £15, a pool swim is £6.80, a lido swim is £6.40, and a sauna is £18.70. Add those up over a month and compare the total to the membership fee, and you get a very honest number.</p>
 <p>That turns &quot;I should go more&quot; into something I can see. The Membership value card shows how much I've had back this month, the day I paid it off, my cost per visit, and whether I'm ahead of or behind last month by the same day.</p>
-<p>The second goal is weight. Weigh-ins are noisy day to day, so the app draws a smoothed trend line through them and works out the rate per week from the last four weeks. From that it estimates when I'll hit my goal at the current pace.</p>
+<p>The other cards look at the longer run. Value by month stacks each month's sessions by type, so I can see the mix shift between gym, pool, lido, and sauna, with a line at the fee. Month by month adds visits, cost per visit, and how many days I was active, and a heatmap shows every day of the last few months at a glance.</p>
 <h2>Version one: quick, public, and slow 🐌</h2>
 <p>The first version was a FastAPI app with a Supabase database, charts drawn with Plotly, and hosting on Vercel's free tier. It did the job, but it had two problems:</p>
 <ul>
 <li><strong>It was slow to wake up.</strong> Vercel runs apps like this as serverless functions, so after a quiet spell the first visit took about eight seconds. That's a long time to stand at a gym reception holding your phone.</li>
-<li><strong>It had no sign-in.</strong> Anyone with the address could see my data, which for health data isn't great.</li>
+<li><strong>It had no sign-in.</strong> Anyone with the address could see my data, which for personal data isn't great.</li>
 </ul>
 <h2>Moving it onto my own server 🖥️</h2>
 <p>I already run a small server for my notes app: a free virtual machine on Oracle Cloud's Always Free tier, with two ARM cores and 12 GB of memory. So Pulseboard moved in next door.</p>
@@ -172,7 +172,7 @@
   </figure>
 </div>
 <h2>Next: the Oura ring 💍</h2>
-<p>We've ordered an Oura ring and we're waiting for it to arrive. Once it does, I want Pulseboard to pull in my daily numbers from Oura's official API, so they sit next to my workouts:</p>
+<p>I've ordered an Oura ring and I'm waiting for it to arrive. Once it does, I want Pulseboard to pull in my daily numbers from Oura's official API, so they sit next to my workouts:</p>
 <ul>
 <li><strong>A Today screen</strong> with my readiness score and a simple suggestion, like &quot;good day to push&quot; or &quot;take it easy&quot;.</li>
 <li><strong>Sleep, HRV, and resting heart rate</strong>, so I can see how training and recovery line up over time.</li>
@@ -191,6 +191,6 @@
 
     <footer class="site-footer wrap">Built with Eleventy. Hosted on GitHub Pages.</footer>
 
-    <script src="/script.js?v=1795010357829"></script>
+    <script src="/script.js?v=1795010738690"></script>
 </body>
 </html>
