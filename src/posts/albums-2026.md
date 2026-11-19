@@ -4,7 +4,9 @@ date: 2026-11-19
 tags: music
 ---
 
-> [!info] Ranking in no particular order since I can't commit to a decision
+::: info
+Ranking in no particular order since I can't commit to a decision
+:::
 
 <div class="albums">
 
