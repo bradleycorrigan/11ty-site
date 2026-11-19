@@ -6,8 +6,8 @@ templateEngineOverride: njk
 ---
 
 <section class="hero">
-  <h1>Notes about stuff I'm doing</h1>
-  <p>Mostly data: SQL, Python, and analytics engineering. Sometimes travel, and the odd thing I've built.</p>
+  <h1>Things I'm working on, and things I'm into</h1>
+  <p>Mostly data: SQL, Python, and analytics engineering. Also travel, music, and the odd thing I've built.</p>
 </section>
 
 <section id="writing" aria-labelledby="writing-label">
