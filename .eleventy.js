@@ -1,6 +1,42 @@
 const markdownIt = require("markdown-it");
 const markdownItContainer = require("markdown-it-container");
 
+// Obsidian/GitHub-style callouts: "> [!info] text" (or a bare "[!info] text"
+// paragraph) becomes the same <div class="info"> box as "::: info".
+const CALLOUT_RE = /^\[!(info|note|tip|warning)\][ \t]*\n?/i;
+function calloutMarkers(md) {
+  md.core.ruler.after("block", "callout_markers", (state) => {
+    const t = state.tokens;
+    for (let i = 0; i < t.length; i++) {
+      const quoted = t[i].type === "blockquote_open";
+      const p = quoted ? i + 1 : i;
+      if (t[p]?.type !== "paragraph_open" || t[p + 1]?.type !== "inline") continue;
+      if (!quoted && t[i - 1]?.type === "blockquote_open") continue;
+      const m = t[p + 1].content.match(CALLOUT_RE);
+      if (!m) continue;
+      const kind = m[1].toLowerCase();
+      t[p + 1].content = t[p + 1].content.slice(m[0].length);
+      if (quoted) {
+        let depth = 0, j = i;
+        for (; j < t.length; j++) {
+          if (t[j].type === "blockquote_open") depth++;
+          if (t[j].type === "blockquote_close" && --depth === 0) break;
+        }
+        t[i].tag = t[j].tag = "div";
+        t[i].attrSet("class", kind);
+      } else {
+        const open = new state.Token("callout_open", "div", 1);
+        open.attrSet("class", kind);
+        open.block = true;
+        const close = new state.Token("callout_close", "div", -1);
+        close.block = true;
+        t.splice(p + 3, 0, close);
+        t.splice(p, 0, open);
+        i = p + 4;
+      }
+    }
+  });
+}
 
 module.exports = function(eleventyConfig) {
   // Syntax highlighting
@@ -12,7 +48,8 @@ module.exports = function(eleventyConfig) {
   .use(markdownItContainer, 'info')
   .use(markdownItContainer, 'note')
   .use(markdownItContainer, 'tip')
-  .use(markdownItContainer, 'warning');
+  .use(markdownItContainer, 'warning')
+  .use(calloutMarkers);
 
 eleventyConfig.setLibrary("md", md);
 
