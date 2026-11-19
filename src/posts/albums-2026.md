@@ -14,7 +14,8 @@ Ranking in no particular order since I can't commit to a decision
   <img src="/images/albums-2026/popstar.jpg" width="600" height="600" alt="Album cover for Popstar by Tinashe" loading="lazy">
   <div class="album-text">
     <h3>Popstar <span>Tinashe</span></h3>
-    <p>This album just feels so fresh and funky I have so much fun listening to it, there's so many songs that stand up by themselves. Sampling Chillin' from Lady Gaga was a great choice. Too Easy, Nobody Wanna Dance Anymore, and Brainrot may be my top three.</p>
+    <p>This album just feels so fresh and funky I have so much fun listening to it, there's so many songs that stand up by themselves. Sampling Chillin' from Lady Gaga was a great choice.</p>
+    <p class="standouts">Too Easy, Nobody Wanna Dance Anymore, and Brainrot</p>
   </div>
 </section>
 
@@ -22,7 +23,8 @@ Ranking in no particular order since I can't commit to a decision
   <img src="/images/albums-2026/dancing-on-the-wall.jpg" width="600" height="600" alt="Album cover for Dancing on the Wall by Muna" loading="lazy">
   <div class="album-text">
     <h3>Dancing on the Wall <span>Muna</span></h3>
-    <p>Muna enter their angsty era and it's very fun. The Hannah Einbinder cameo, the collision of worlds. Genuinely such a great album. Big Stick, Eastside Girls, and Wannabeher are definitely my standouts.</p>
+    <p>Muna enter their angsty era and it's very fun. The Hannah Einbinder cameo, the collision of worlds. Genuinely such a great album.</p>
+    <p class="standouts">Big Stick, Eastside Girls, and Wannabeher</p>
   </div>
 </section>
 
@@ -30,7 +32,8 @@ Ranking in no particular order since I can't commit to a decision
   <img src="/images/albums-2026/music-fashion-film.jpg" width="600" height="600" alt="Album cover for Music, Fashion, Film by Charli xcx" loading="lazy">
   <div class="album-text">
     <h3>Music, Fashion, Film <span>Charli xcx</span></h3>
-    <p>Lowkenuinely worried that the comedown from (overdue?) mainstream success might make this album suck big time, and I'm still mad about the ticket situation, but yes, this album banged regardless. Camera, 2007, and yeah do it for me.</p>
+    <p>Lowkenuinely worried that the comedown from (overdue?) mainstream success might make this album suck big time, and I'm still mad about the ticket situation, but yes, this album banged regardless.</p>
+    <p class="standouts">Camera, 2007, and Yeah</p>
   </div>
 </section>
 
